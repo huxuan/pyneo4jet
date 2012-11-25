@@ -14,7 +14,7 @@ a mature and robust database [1]. For more information, refer to the
 
 ## requirements
 
-- gevent
+- bottle
 
 You can easily install all requirements via pip by command
 
