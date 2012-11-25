@@ -23,32 +23,6 @@ You can easily install all requirements via pip by command
 sudo pip install -r requirements.txt
 ```
 
-## What does pyneo4jet supported?
-
-- /
-
-  > login or timeline for tweets from your friends and yourself.
-
-- /register/
-
-  > register new account (currently need ivitation code).
-
-- /profile/
-
-  > set & view basic profile with username and avatar.
-
-- /tweet/[&lt;index&gt;]
-
-  >  post your tweet.
-
-- /user/&lt;username&gt;/
-
-  > view user's profile and tweets and you can make friends with others here
-
-- /user/&lt;username&gt;/friends/[&lt;index&gt;]
-
-  > View friend's friends
-
 ## Material
 
 - [Official python embedded installation guide](http://docs.neo4j.org/chunked/stable/python-embedded-installation.html)
