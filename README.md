@@ -37,15 +37,15 @@ sudo pip install -r requirements.txt
 
   > set & view basic profile with username and avatar.
 
-- /tweet/
+- /tweet/[&lt;index&gt;]
 
   >  post your tweet.
 
-- /user/<username>/
+- /user/&lt;username&gt;/
 
   > view user's profile and tweets and you can make friends with others here
 
-- /user/<username>/friends/
+- /user/&lt;username&gt;/friends/[&lt;index&gt;]
 
   > View friend's friends
 
