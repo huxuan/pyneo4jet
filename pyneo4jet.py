@@ -136,6 +136,9 @@ def user_firends_get(username, index=0):
 
 def main():
     """Parse the args and run the server"""
+
+    bottle.debug(VERSION == 'development')
+
     if len(sys.argv) == 2 and sys.argv[1].isdigit():
         port = sys.argv[1]
     else:
