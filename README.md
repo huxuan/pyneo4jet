@@ -19,7 +19,7 @@ a mature and robust database [1]. For more information, refer to the
 
 You can easily install all requirements via pip by command
 
-```
+```shell
 sudo pip install -r requirements.txt
 ```
 
@@ -27,13 +27,33 @@ sudo pip install -r requirements.txt
 
 After installing requirements, you can easily run it by command
 
-```
+```shell
 python /path/to/pyneo4jet.py [port_number]
 ```
 
 - **/path/to/pyneo4jet.py** is the path to the file pyneo4jet.py
 - **[port_number]** is the port number to run the application which is optional
   and defaults to 8888
+
+## How to begin develop? (For Collaborators Only)
+
+Workflow:
+
+```shell
+1 git clone git@github.com:huxuan/pyneo4jet.git
+2 cd pyneo4jet
+3 git pull
+4 *make some changes*
+5 git add *filename if a new file created*
+6 git commit -a -m 'Description about this change'
+7 *repeat from step 3 to step 6*
+8 git push
+```
+
+Some tips:
+
+- Commit Early, Commit Often [2].
+- Every work should begin will `git pull` or pull as often as you can.
 
 ## Material
 
@@ -45,3 +65,4 @@ python /path/to/pyneo4jet.py [port_number]
 - [Bottle Tutorial](http://bottlepy.org/docs/stable/)
 
 [1]: http://neo4j.org/
+[2]: http://sethrobertson.github.com/GitBestPractices/#commit
