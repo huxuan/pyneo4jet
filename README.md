@@ -12,6 +12,16 @@ Neo4j is a high-performance, NOSQL graph database with all the features of
 a mature and robust database [1]. For more information, refer to the
 [official site](http://neo4j.org/).
 
+## requirements
+
+- gevent
+
+You can easily install all requirements via pip by command
+
+```
+sudo pip install -r requirements.txt
+```
+
 ## What does pyneo4jet supported?
 
 - /register/
@@ -33,16 +43,6 @@ a mature and robust database [1]. For more information, refer to the
 - /[username]/friends/
 
   > View friend's friends
-
-## requirements
-
-- gevent
-
-You can easily install all requirements via pip by command
-
-```
-sudo pip install -r requirements.txt
-```
 
 ## Material
 
