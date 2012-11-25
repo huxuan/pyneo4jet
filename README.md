@@ -32,19 +32,19 @@ sudo pip install -r requirements.txt
 
   > register new account (currently need ivitation code).
 
-- /me/profile/
+- /profile/
 
   > set & view basic profile with username and avatar.
 
-- /me/tweet/
+- /tweet/
 
   >  post your tweet.
 
-- /[username]/
+- /user/[username]/
 
   > view your friend's profile and where you can make friends with others
 
-- /[username]/friends/
+- /user/[username]/friends/
 
   > View friend's friends
 
