@@ -42,7 +42,7 @@ sudo pip install -r requirements.txt
 
 - /user/[username]/
 
-  > view your friend's profile and where you can make friends with others
+  > view user's profile and tweets and you can make friends with others here
 
 - /user/[username]/friends/
 
