@@ -31,6 +31,8 @@ def login_or_timeline_get():
     Check whether user has login
     show the timeline if is
     show login otherwise
+
+    :rtype: timeline page if already signed in, login page otherswise
     """
     return 'GET /'
 
@@ -38,6 +40,8 @@ def login_or_timeline_get():
 def login_post():
     """
     Check whether post the corresponding username and password
+
+    :rtype: login page with form
     """
     return 'POST /'
 
@@ -45,6 +49,8 @@ def login_post():
 def register_get():
     """
     Show the form for register
+
+    :rtype: register page with form
 
     Note:
         Currently INVITATION_CODE is NEEDED!
@@ -56,6 +62,8 @@ def register_post():
     """
     Add a new account
 
+    :rtype: login page if success, register page with error info otherwise
+
     Note:
         Need to check whether username, avatar and INVITATION_CODE is valid
         avatar could be optional but should have default value
@@ -66,6 +74,8 @@ def register_post():
 def profile_get():
     """
     Show form of profile with subbmit button which can change it.
+
+    :rtype: user's profile page
     """
     return 'GET /profile/'
 
@@ -73,6 +83,8 @@ def profile_get():
 def profile_post():
     """
     Update profile and redirect to get page
+
+    :rtype: user's profile page
     """
     return 'POST /profile/'
 
@@ -81,6 +93,10 @@ def profile_post():
 def tweet_get(index=0):
     """
     Show an empty form for tweet
+
+    :param index: the begin index of tweets to be shown, default to 0
+    :type index: int
+    :rtype: tweets page shown with corresponding tweets
     """
     return 'GET /tweet/%d' % index
 
@@ -88,6 +104,8 @@ def tweet_get(index=0):
 def tweet_post():
     """
     Add a new tweet
+
+    :rtype: timeline page with result of post
     """
     return 'POST /tweet/'
 
@@ -95,6 +113,10 @@ def tweet_post():
 def user_get(username):
     """
     Show user's profile and tweets as well as follow link or followed status.
+
+    :param username: username of the user
+    :type username: string
+    :rtype: profile page of the user
     """
     return 'GET /user/%s' % username
 
@@ -103,6 +125,12 @@ def user_get(username):
 def user_firends_get(username, index=0):
     """
     Show list for user's friends
+
+    :param username: username of the user
+    :type username: string
+    :param index: the begin index of friends list, default to 0
+    :type index: int
+    :rtype: friends list page of corresponding user and friends
     """
     return 'GET /user/%s/friends/%d' % (username, index, )
 
