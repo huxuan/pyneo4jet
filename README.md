@@ -41,11 +41,11 @@ sudo pip install -r requirements.txt
 
   >  post your tweet.
 
-- /user/[username]/
+- /user/<username>/
 
   > view user's profile and tweets and you can make friends with others here
 
-- /user/[username]/friends/
+- /user/<username>/friends/
 
   > View friend's friends
 
