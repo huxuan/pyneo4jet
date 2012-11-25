@@ -23,6 +23,8 @@ except ImportError:
     print '[Error] config.py is NEEDED! Refer to config-sample.py'
     sys.exit(1)
 
+from model.user import User
+
 @get('/')
 def login_or_timeline_get():
     """
