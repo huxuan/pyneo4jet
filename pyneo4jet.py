@@ -18,7 +18,7 @@ gevent.monkey.patch_all()
 from bottle import run, get, post, request, template
 
 try:
-    from config import *
+    from config import VERSION, INVITATION_CODE, COOKIES_SECRET
 except ImportError:
     print '[Error] config.py is NEEDED! Refer to config-sample.py'
     sys.exit(1)

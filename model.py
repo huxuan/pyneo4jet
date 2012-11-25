@@ -20,12 +20,11 @@ class User(object):
     """
     def __init__(self, username, avatar_url=''):
         """Init User"""
-        super(User, self).__init__(*args, **kwargs)
         self.username = username
         self.avatar_url = avatar_url
 
     @staticmethod
-    def get(self, username):
+    def get(username):
         """
         get a user by username
 
