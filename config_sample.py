@@ -17,3 +17,6 @@ VERSION = 'development | production'
 
 # INVITATION_CODE is needed currently for register
 INVITATION_CODE = 'whatever_you_want'
+
+# COOKIES_SECRET is used to sign cookies in bottle
+COOKIES_SECRET = 'whatever_you_want'
