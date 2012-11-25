@@ -1,7 +1,6 @@
 """
 File: user.py
-Author: huxuan
-E-mail: i(at)huxuan.org
+Author: huxuan - i(at)huxuan.org
 Created: 2012-11-25
 Last modified: 2012-11-25
 Description:
