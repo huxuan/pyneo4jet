@@ -100,3 +100,25 @@ class Tweet(object):
         """Init Tweet"""
         self.text = text
         self.created_at = created_at
+
+    @staticmethod
+    def get(tid):
+        """
+        get a tweet by tid
+
+        :param tid: the id of the tweet
+        :type tid: int
+        :rtype: instance of tweet
+        """
+        pass
+
+    def add(self):
+        """
+        Add a tweet to neo4j database
+
+        :rtype: true or false indicates the result of add action
+
+        Note:
+            Before add there needs a check!
+        """
+        pass
