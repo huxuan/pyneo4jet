@@ -24,6 +24,10 @@ sudo pip install -r requirements.txt
 
 ## What does pyneo4jet supported?
 
+- /
+
+  > login or timeline for tweets from your friends and yourself.
+
 - /register/
 
   > register new account (currently need ivitation code).
