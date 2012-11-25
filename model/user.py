@@ -14,24 +14,16 @@ License GPLv3
 class User(object):
     """Wrap of all actions related to User
 
-    Attributes:
-        args: Description of args
+    :param username: the username of the user
+    :type username: string
+    :param avatar_url: the url of user's avatar
+    :type avatar: string
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, username, avatar_url=''):
         """Init User"""
         super(User, self).__init__(*args, **kwargs)
-
-    @staticmethod
-    def add(self, username, avatar_url=''):
-        """
-        Add a user with username and avatar_url
-
-        :param username: the username of the user
-        :type username: string
-        :param avatar_url: the url of user's avatar
-        :type avatar: string
-        """
-        pass
+        self.username = username
+        self.avatar_url = avatar_url
 
     @staticmethod
     def get(self, username):
@@ -40,6 +32,33 @@ class User(object):
 
         :param username: the username of the user
         :type username: string
+        :rtype: instance of user
+        """
+        pass
+
+    def add(self):
+        """
+        Add a user to neo4j database
+
+        :rtype: true or false indicates the result of add action
+
+        Note:
+            Before add there needs a check!
+        """
+        pass
+
+    def update(self, username, avatar_url=''):
+        """
+        Update a user's profile with username and avatar_url
+
+        :param username: the username of the user
+        :type username: string
+        :param avatar_url: the url of user's avatar
+        :type avatar: string
+        :rtype: true or false indicated the result of update action
+
+        Notes:
+            Before update there needs a check!
         """
         pass
 
@@ -53,6 +72,7 @@ class User(object):
         :type index: int
         :param index: the amount of friends to be shown, default to 10
         :type index: int
+        :rtype: list of friends/user instances
         """
         pass
 
@@ -66,5 +86,6 @@ class User(object):
         :type index: int
         :param index: the amount of tweets to be shown, default to 10
         :type index: int
+        :rtype: list of tweet instances
         """
         pass
