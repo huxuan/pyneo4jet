@@ -37,23 +37,23 @@ python /path/to/pyneo4jet.py [port_number]
 
 ## How to begin develop? (For Collaborators Only)
 
-Workflow:
+### Workflow
 
 ```shell
-1 git clone git@github.com:huxuan/pyneo4jet.git
+1 git clone git@github.com:huxuan/pyneo4jet.git # Only need to do this once
 2 cd pyneo4jet
 3 git pull
-4 *make some changes*
-5 git add *filename if a new file created*
+4 # make some changes
+5 git add filename # if a new file named filename created, repeat if more
 6 git commit -a -m 'Description about this change'
-7 *repeat from step 3 to step 6*
+7 # repeat from step 3 to step 6
 8 git push
 ```
 
-Some tips:
+### Some tips:
 
-- Commit Early, Commit Often [2].
-- Every work should begin will `git pull` or pull as often as you can.
+- Commit Early, Commit Often. [2]
+- Every work should begin will `git pull`.
 
 ## Material
 
