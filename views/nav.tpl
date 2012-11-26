@@ -5,5 +5,7 @@
     |<a href="/{{username}}/tweets/">Tweets</a>
     |<a href="/{{username}}/followers/">Followers</a>
     |<a href="/{{username}}/following/">Following</a>
+    % else:
+    |<a href="/?method=signup">Sign Up</a>
     % end
 </div>
