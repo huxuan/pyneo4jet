@@ -7,3 +7,7 @@ clean:
 # Pylint Code
 pylint:
 	find . -name "*.py" | xargs pylint
+
+# Data Parser
+data-parser:
+	python -m data.parser
