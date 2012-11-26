@@ -14,6 +14,18 @@ a mature and robust database [1]. For more information, refer to the
 
 ## What is required?
 
+### dev packages
+
+- python-dev
+- libevent-dev
+
+In Ubuntu/Debian, they can be easily intalled by command
+
+```shell
+sudo apt-get install python-dev libevent-dev
+```
+
+### python third part modules
 - bottle
 - gevent
 
