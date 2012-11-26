@@ -32,7 +32,7 @@ sudo apt-get install python-dev libevent-dev
 You can easily install all requirements via pip by command
 
 ```shell
-sudo pip install -r requirements.txt
+sudo pip install -r requirements.txt --upgrade
 ```
 
 ## How to run it?
@@ -55,7 +55,7 @@ python /path/to/pyneo4jet.py [port_number]
 0 git clone git@github.com:huxuan/pyneo4jet.git
 1 cd pyneo4jet
 2 sudo apt-get install python-dev libevent-dev
-3 sudo pip install -r requirements.txt
+3 sudo pip install -r requirements.txt --upgrade
 # Only need to do step 0 to step 4 once
 4 git pull
 # make some changes
