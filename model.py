@@ -58,16 +58,6 @@ class User(object):
         """
         pass
 
-    def add_following(self, username):
-        """
-        Add one person to a usre's following list
-
-        :param username: the username of the person to following
-        :type username: string
-        :rtype: true or false indicates the result of following action
-        """
-        pass
-
     def update(self, username, avatar_url=''):
         """
         Update a user's profile with username and avatar_url
@@ -80,6 +70,26 @@ class User(object):
 
         Notes:
             Before update there needs a check!
+        """
+        pass
+
+    def follow(self, username):
+        """
+        A user follow one person named username
+
+        :param username: the username of the person to follow
+        :type username: string
+        :rtype: true or false indicates the result of follow action
+        """
+        pass
+
+    def unfollow(self, username):
+        """
+        A user unfollow one person named username
+
+        :param username: the username of the person to unfollow
+        :type username: string
+        :rtype: true or false indicates the result of unfollow action
         """
         pass
 
@@ -133,8 +143,9 @@ class Tweet(object):
     :param created_at: the time created the tweet
     :type created_at: datetime
     """
-    def __init__(self, text, created_at):
+    def __init__(self, username, text, created_at):
         """Init Tweet"""
+        self.username = username
         self.text = text
         self.created_at = created_at
 
@@ -157,5 +168,13 @@ class Tweet(object):
 
         Note:
             Before add there needs a check!
+        """
+        pass
+
+    def remove(self):
+        """
+        Remove a tweet from neo4j database
+
+        :rtype: true or false indicates the result of remove action
         """
         pass
