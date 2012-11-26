@@ -34,6 +34,19 @@ class User(object):
         """
         pass
 
+    @staticmethod
+    def auth(username, password):
+        """
+        Check the authentication of a user
+
+        :param username: the username of a user
+        :type username: string
+        :param password: the password need to be checked
+        :type password: string
+        :rtype: true if authentication is ok, false otherwise
+        """
+        pass
+
     def add(self):
         """
         Add a user to neo4j database
