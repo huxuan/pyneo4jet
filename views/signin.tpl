@@ -3,9 +3,9 @@
     <br />
     password: <input type="password" name="password" value=""/>
     <br />
-    <input type="submit" name="login" value="login"/>
+    <input type="submit" name="signin" value="Sign In"/>
 </form>
-%if defined('msg'):
+% if defined('msg'):
     <div>{{msg}}</div>
-%end
-%rebase base title="login",username=get('username')
+% end
+% rebase base title="SignIn",username=get('username')

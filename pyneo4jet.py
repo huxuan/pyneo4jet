@@ -15,7 +15,7 @@ import sys
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, template
+from bottle import run, get, post, request, template, redirect
 
 try:
     from config import VERSION, INVITATION_CODE, COOKIES_SECRET
@@ -28,20 +28,24 @@ from model import User, Tweet
 @get('/')
 def index_get():
     """
-    Show login form or timeline if already signed in
+    Show signin or signup form according to 'method' param
+    If already signed in, redirect to timeline page
 
-    :rtype: timeline page if already signed in, login page otherswise
-
-    Note:
-        use a 'method' param to judge whether login or timeline
+    :rtype: login or signup page or redirect to timeline page
     """
-    return 'GET /'
+    if request.GET.get('method') == 'signup':
+        return template('signup')
+    else:
+        username = request.get_cookie('username', secret=COOKIES_SECRET)
+        if username:
+            redirect('/%s/timeline/' % username)
+        else:
+            return template('signin')
 
 @post('/')
 def index_post():
     """
-    For login check only
-    Check whether post the valid username and password
+    Check validation for SignIn or SignUp
 
     :rtype: login page with form
     """
@@ -77,9 +81,23 @@ def user(username):
     """
     return 'POST /%s/' % username
 
+@get('/<username>/timeline/')
+@get('/<username>/timeline/<index:int>')
+def timeline(username, index=0):
+    """
+    Show user's timeline
+
+    :param username: username of the user
+    :type username: string
+    :param index: the begin index of timeline list, default to 0
+    :type index: int
+    :rtype: timeline page shown
+    """
+    return 'GET /%s/timeline/%d' % (username, index, )
+
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
-def user_tweets(username, index=0):
+def tweets(username, index=0):
     """
     Show user's tweets
 
@@ -93,7 +111,7 @@ def user_tweets(username, index=0):
 
 @get('/<username>/followers/')
 @get('/<username>/followers/<index:int>')
-def user_followers(username, index=0):
+def followers(username, index=0):
     """
     Show user's followers
 
@@ -107,7 +125,7 @@ def user_followers(username, index=0):
 
 @get('/<username>/following/')
 @get('/<username>/following/<index:int>')
-def user_following(username, index=0):
+def following(username, index=0):
     """
     Show user's following
 

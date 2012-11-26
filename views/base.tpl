@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>{{title and '%s | ' % title }}pyneo4jet</title>
+    <title>{{get('title', '') and '%s | ' % title }}pyneo4jet</title>
 </head>
 <body>
     %include nav username=get('username')
