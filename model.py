@@ -73,17 +73,31 @@ class User(object):
         """
         pass
 
-    def get_friends(self, username, index=0, amount=10):
+    def get_followers(self, username, index=0, amount=10):
         """
-        get a user's friends by username
+        get a user's followers by username
 
         :param username: the username of the user
         :type username: string
-        :param index: the begin index of friends to be shown, default to 1
+        :param index: the begin index of followers to be shown, default to 1
         :type index: int
-        :param index: the amount of friends to be shown, default to 10
+        :param index: the amount of followers to be shown, default to 10
         :type index: int
-        :rtype: list of friends/user instances
+        :rtype: list of followers/user instances
+        """
+        pass
+
+    def get_following(self, username, index=0, amount=10):
+        """
+        get a user's following by username
+
+        :param username: the username of the user
+        :type username: string
+        :param index: the begin index of following to be shown, default to 1
+        :type index: int
+        :param index: the amount of following to be shown, default to 10
+        :type index: int
+        :rtype: list of following/user instances
         """
         pass
 
