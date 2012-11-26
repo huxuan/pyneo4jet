@@ -61,10 +61,9 @@ python /path/to/pyneo4jet.py [port_number]
 # make some changes
 5 git diff # Check the code changes, ensure whole app runnable
 6 git add filename # if a new file named filename created, repeat if more
-7 git status # Check changes summary, especially for 'Changes staged for commit'
-8 git commit -a -m 'Description about this change'
-# repeat from step 4 to step 8
-9 git push # When a whole new function has been implemented
+7 git commit -a -m 'Description about this change'
+# repeat from step 4 to step 7
+8 git push # When a whole new function has been implemented
 ```
 
 ### Some tips:
