@@ -58,6 +58,16 @@ class User(object):
         """
         pass
 
+    def add_following(self, username):
+        """
+        Add one person to a usre's following list
+
+        :param username: the username of the person to following
+        :type username: string
+        :rtype: true or false indicates the result of following action
+        """
+        pass
+
     def update(self, username, avatar_url=''):
         """
         Update a user's profile with username and avatar_url
