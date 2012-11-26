@@ -26,113 +26,98 @@ except ImportError:
 from model import User, Tweet
 
 @get('/')
-def login_or_timeline_get():
+def index_get():
     """
-    Check whether user has login
-    show the timeline if is
-    show login otherwise
+    Show login form or timeline if already signed in
 
     :rtype: timeline page if already signed in, login page otherswise
+
+    Note:
+        use a 'method' param to judge whether login or timeline
     """
     return 'GET /'
 
 @post('/')
-def login_post():
+def index_post():
     """
-    Check whether post the corresponding username and password
+    For login check only
+    Check whether post the valid username and password
 
     :rtype: login page with form
     """
     return 'POST /'
 
-@get('/register/')
-def register_get():
+@get('/<username>/')
+def user(username):
     """
-    Show the form for register
+    Show user's profile with at most recent 10 tweets
 
-    :rtype: register page with form
+    :param username: username of the user
+    :type username: string
+    :rtype: profile page of the user
 
     Note:
-        Currently INVITATION_CODE is NEEDED!
-    """
-    return 'GET /register/'
+        Need to check whether authenticated or not
+        if so add an profile edit button
+        if not follow button or followed status
 
-@post('/register/')
-def register_post():
+        Use a 'method' to judge whether to edit the profile
+        if is, update button should be shown instead.
     """
-    Add a new account
+    return 'GET /%s/' % username
 
-    :rtype: login page if success, register page with error info otherwise
-
-    Note:
-        Need to check whether username, avatar and INVITATION_CODE is valid
-        avatar could be optional but should have default value
+@post('/<username>/')
+def user(username):
     """
-    return 'POST /register/'
-
-@get('/profile/')
-def profile_get():
-    """
-    Show form of profile with subbmit button which can change it.
-
-    :rtype: user's profile page
-    """
-    return 'GET /profile/'
-
-@post('/profile/')
-def profile_post():
-    """
-    Update profile and redirect to get page
-
-    :rtype: user's profile page
-    """
-    return 'POST /profile/'
-
-@get('/tweet/')
-@get('/tweet/<index:int>')
-def tweet_get(index=0):
-    """
-    Show an empty form for tweet
-
-    :param index: the begin index of tweets to be shown, default to 0
-    :type index: int
-    :rtype: tweets page shown with corresponding tweets
-    """
-    return 'GET /tweet/%d' % index
-
-@post('/tweet/')
-def tweet_post():
-    """
-    Add a new tweet
-
-    :rtype: timeline page with result of post
-    """
-    return 'POST /tweet/'
-
-@get('/user/<username>')
-def user_get(username):
-    """
-    Show user's profile and tweets as well as follow link or followed status.
+    Update user's profile
 
     :param username: username of the user
     :type username: string
     :rtype: profile page of the user
     """
-    return 'GET /user/%s' % username
+    return 'POST /%s/' % username
 
-@get('/user/<username>/friends/')
-@get('/user/<username>/friends/<index:int>')
-def user_firends_get(username, index=0):
+@get('/<username>/tweets/')
+@get('/<username>/tweets/<index:int>')
+def user_tweets(username, index=0):
     """
-    Show list for user's friends
+    Show user's tweets
 
     :param username: username of the user
     :type username: string
-    :param index: the begin index of friends list, default to 0
+    :param index: the begin index of tweets list, default to 0
     :type index: int
-    :rtype: friends list page of corresponding user and friends
+    :rtype: tweets page shown
     """
-    return 'GET /user/%s/friends/%d' % (username, index, )
+    return 'GET /%s/tweets/%d' % (username, index, )
+
+@get('/<username>/followers/')
+@get('/<username>/followers/<index:int>')
+def user_followers(username, index=0):
+    """
+    Show user's followers
+
+    :param username: username of the user
+    :type username: string
+    :param index: the begin index of followers list, default to 0
+    :type index: int
+    :rtype: followers list page
+    """
+    return 'GET /%s/followers/%d' % (username, index, )
+
+@get('/<username>/following/')
+@get('/<username>/following/<index:int>')
+def user_following(username, index=0):
+    """
+    Show user's following
+
+    :param username: username of the user
+    :type username: string
+    :param index: the begin index of following list, default to 0
+    :type index: int
+    :rtype: following list page
+    """
+    return 'GET /%s/following/%d' % (username, index, )
 
 def main():
     """Parse the args and run the server"""
