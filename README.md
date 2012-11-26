@@ -52,17 +52,19 @@ python /path/to/pyneo4jet.py [port_number]
 ### Workflow
 
 ```shell
-0 sudo apt-get install python-dev libevent-dev
-1 git clone git@github.com:huxuan/pyneo4jet.git
-  # Only need to do step 0 & 1 once
-2 cd pyneo4jet
-3 git pull
-4 # make some changes
+0 git clone git@github.com:huxuan/pyneo4jet.git
+1 cd pyneo4jet
+2 sudo apt-get install python-dev libevent-dev
+3 sudo pip install -r requirements.txt
+# Only need to do step 0 to step 4 once
+4 git pull
+# make some changes
 5 git diff # Check the code changes, ensure whole app runnable
-5 git add filename # if a new file named filename created, repeat if more
-6 git commit -a -m 'Description about this change'
-7 # repeat from step 3 to step 6
-8 git push # When a whole new function has been implemented
+6 git add filename # if a new file named filename created, repeat if more
+7 git status # Check changes summary, especially for 'Changes staged for commit'
+8 git commit -a -m 'Description about this change'
+# repeat from step 4 to step 8
+9 git push # When a whole new function has been implemented
 ```
 
 ### Some tips:
