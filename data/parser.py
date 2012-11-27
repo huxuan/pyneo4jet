@@ -36,7 +36,7 @@ def main():
             # print dict(zip(KEYS, res.groups()))
             # raw_input()
             info = dict(zip(KEYS, res.groups()))
-            user_list[info['id']] = info['username']
+            username_list[info['id']] = info['username']
             user = User(user_info)
             user.add()
     data.close()
