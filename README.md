@@ -69,7 +69,7 @@ python /path/to/pyneo4jet.py [port_number]
 ### Some tips:
 
 - Commit Early, Commit Often. [2]
-- Every work should begin will `git pull`.
+- Every work should begin with `git pull`.
 - Commit/Push with cautious, MUST ensure whole app runnable.
 
 ## Material
