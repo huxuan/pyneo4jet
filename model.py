@@ -99,12 +99,10 @@ class User(object):
         """
         pass
 
-    def get_followers(self, username, index=0, amount=10):
+    def get_followers(self, index=0, amount=10):
         """
         get a user's followers by username
 
-        :param username: the username of the user
-        :type username: string
         :param index: the begin index of followers to be shown, default to 1
         :type index: int
         :param index: the amount of followers to be shown, default to 10
@@ -113,12 +111,10 @@ class User(object):
         """
         pass
 
-    def get_following(self, username, index=0, amount=10):
+    def get_following(self, index=0, amount=10):
         """
         get a user's following by username
 
-        :param username: the username of the user
-        :type username: string
         :param index: the begin index of following to be shown, default to 1
         :type index: int
         :param index: the amount of following to be shown, default to 10
@@ -127,12 +123,10 @@ class User(object):
         """
         pass
 
-    def get_tweets(self, username, index=0, amount=10):
+    def get_tweets(self, index=0, amount=10):
         """
         get a user's tweets by username
 
-        :param username: the username of the user
-        :type username: string
         :param index: the begin index of tweets to be shown, default to 1
         :type index: int
         :param index: the amount of tweets to be shown, default to 10
