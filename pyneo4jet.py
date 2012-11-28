@@ -52,7 +52,7 @@ def index_post():
     return 'POST /'
 
 @get('/<username>/')
-def user(username):
+def profile(username):
     """
     Show user's profile with at most recent 10 tweets
 
@@ -71,7 +71,7 @@ def user(username):
     return 'GET /%s/' % username
 
 @post('/<username>/')
-def profile(username):
+def profile_update(username):
     """
     Update user's profile
 
