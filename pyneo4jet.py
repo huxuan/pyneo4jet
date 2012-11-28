@@ -4,7 +4,7 @@
 File: pyneo4jet.py
 Author: huxuan - i(at)huxuan.org
 Created: 2012-11-25
-Last modified: 2012-11-25
+Last modified: 2012-11-28
 Description:
     Main interface for pyneo4jet
 
@@ -71,7 +71,7 @@ def user(username):
     return 'GET /%s/' % username
 
 @post('/<username>/')
-def user(username):
+def profile(username):
     """
     Update user's profile
 
