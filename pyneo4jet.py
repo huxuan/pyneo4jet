@@ -49,7 +49,20 @@ def index_post():
 
     :rtype: login page with form
     """
-    return 'POST /'
+    action = request.GET.get('action', 'signin')
+    username = request.forms.get('username')
+    password = request.forms.get('password')
+    if action == 'signup':
+        password_confirm = request.forms.get('password_confirm')
+        invitation = request.forms.get('invitation')
+        res, msg = User.add(username, password, password_confirm, invitation)
+    else:
+        res, msg = User.auth(username, password)
+    if res:
+        response.set_cookie("username", username, secret=COOKIES_SECRET)
+        redirect('/%s/timeline/' % username)
+    else:
+        return template(action, username=username, msg=msg)
 
 @get('/<username>/')
 def profile(username):
