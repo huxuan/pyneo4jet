@@ -65,7 +65,7 @@ def index_post():
         return template(action, username=username, msg=msg)
 
 @get('/<username>/')
-def profile(username):
+def profile_get(username):
     """
     Show user's profile with at most recent 10 tweets
 
@@ -78,10 +78,19 @@ def profile(username):
         if so add an profile edit button
         if not follow button or followed status
 
-        Use a 'action' to judge whether to edit the profile
-        if is, update button should be shown instead.
+        Use 'action' param to judge whether to edit profile or change password
+        if it is 'profile', show profile update form
+        if it is 'password', show password update form
     """
-    return 'GET /%s/' % username
+    user = User.get(username)
+    action = request.GET.get('action', '')
+    if action == 'profile':
+        return template('profile_update', user=user)
+    elif action == 'password':
+        return template('password_update')
+    else:
+        tweets = user.get_tweet()
+        return template('profile', user=user, tweets=tweets)
 
 @post('/<username>/')
 def profile_update(username):
