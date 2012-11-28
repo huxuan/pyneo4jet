@@ -4,7 +4,7 @@
 File: parser.py
 Author: huxuan - i(at)huxuan.org
 Created: 2012-11-26
-Last modified: 2012-11-26
+Last modified: 2012-11-28
 Description:
     The parser of database
 
@@ -16,9 +16,7 @@ import re
 
 from model import User
 
-INFO_PATTERN = re.compile(
-    r'"(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)" "(.*?)"'
-)
+INFO_PATTERN = re.compile('"([^"]+)"')
 
 KEYS = (
     'id', 'username', 'joined', 'species', 'coloring', 'gender', 'birthday',
@@ -32,20 +30,20 @@ def main():
     data = file('data/petster-hamster/ent.petster-hamster')
     for item in data.readlines():
         if not item.startswith('%'):
-            res = INFO_PATTERN.match(item)
-            # print dict(zip(KEYS, res.groups()))
-            # raw_input()
-            info = dict(zip(KEYS, res.groups()))
+            res = INFO_PATTERN.findall(item)
+            info = dict(zip(KEYS, res))
             username_list[info['id']] = info['username']
-            user = User(user_info)
+            user = User(info)
             user.add()
     data.close()
 
     data = file('data/petster-hamster/out.petster-hamster')
     for item in data.readlines():
+        # print repr(item)
+        # raw_input()
         if not item.startswith('%'):
-            uid1, uid2 = item.split(' ')
-            # print uid1, uid2
+            uid1, uid2 = item.strip().split(' ')
+            # print repr(uid1), repr(uid2)
             # raw_input()
             username1 = username_list[uid1]
             username2 = username_list[uid2]
