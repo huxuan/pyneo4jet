@@ -13,7 +13,7 @@ License GPLv3
 
 from neo4j import GraphDatabase
 
-from config import DBNAME
+from config import DBNAME, INVITATION_CODE
 
 class User(object):
     """Wrap of all actions related to User
@@ -52,7 +52,8 @@ class User(object):
         """
         pass
 
-    def add(self):
+    @staticmethod
+    def add(username, password, password_confirm, invitation):
         """
         Add a user to neo4j database
 
