@@ -28,12 +28,12 @@ from model import User, Tweet
 @get('/')
 def index_get():
     """
-    Show signin or signup form according to 'method' param
+    Show signin or signup form according to 'action' param
     If already signed in, redirect to timeline page
 
     :rtype: login or signup page or redirect to timeline page
     """
-    if request.GET.get('method') == 'signup':
+    if request.GET.get('action') == 'signup':
         return template('signup')
     else:
         username = request.get_cookie('username', secret=COOKIES_SECRET)
@@ -65,7 +65,7 @@ def profile(username):
         if so add an profile edit button
         if not follow button or followed status
 
-        Use a 'method' to judge whether to edit the profile
+        Use a 'action' to judge whether to edit the profile
         if is, update button should be shown instead.
     """
     return 'GET /%s/' % username

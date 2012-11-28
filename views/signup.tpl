@@ -1,4 +1,4 @@
-<form action="/?method=signup" method="POST">
+<form action="/?action=signup" method="POST">
     username: <input type="text" name="username" value="{{get('username', '')}}"/>
     <br />
     password: <input type="text" name="password0" value=""/>

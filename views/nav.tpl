@@ -7,6 +7,6 @@
     <a href="/{{username}}/following/">Following</a>|
     <a href="/{{username}}/signout/">Sign Out</a>|
     % else:
-    <a href="/?method=signup">Sign Up</a>|
+    <a href="/?action=signup">Sign Up</a>|
     % end
 </div>
