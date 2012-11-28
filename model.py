@@ -20,13 +20,10 @@ class User(object):
 
     :param username: the username of the user
     :type username: string
-    :param avatar_url: the url of user's avatar
-    :type avatar: string
     """
-    def __init__(self, username, avatar_url=''):
+    def __init__(self, username):
         """Init User"""
         self.username = username
-        self.avatar_url = avatar_url
 
     @staticmethod
     def get(username):
@@ -64,14 +61,12 @@ class User(object):
         """
         pass
 
-    def update(self, username, avatar_url=''):
+    def update(self, username):
         """
-        Update a user's profile with username and avatar_url
+        Update a user's profile with username
 
         :param username: the username of the user
         :type username: string
-        :param avatar_url: the url of user's avatar
-        :type avatar: string
         :rtype: true or false indicated the result of update action
 
         Notes:
