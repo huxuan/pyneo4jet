@@ -3,13 +3,22 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-11-27
+Last modified: 2012-11-28
 Description:
     models used in pyneo4jet
 
 Copyrgiht (c) 2012 by huxuan. All rights reserved.
 License GPLv3
 """
+
+DBAdd = 'database'
+def DBIndex_init():
+	"""Init DB Index"""
+	db = GraphDatabase(DBAdd)
+	with db.transaction:
+		user_idx = db.node.indexes.create('users')
+		tweet_idx = db.node.indexes.create('tweets')
+	db.shutdown()
 
 class User(object):
     """Wrap of all actions related to User
