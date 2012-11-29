@@ -148,9 +148,21 @@ class User(object):
         :type index: int
         :rtype: list of followers/user instances
         """
-        pass
+		user_idx = db.node.indexes.get('users')
+		self.user_node = user_idx['username'][self.username].single
+		user_from = user_idx['username'][username].single
+		List = []
+		for relationship in user_from.FOLLOW.incoming:
+			user_to = relationship.start
+			user = User()
+			user.user_node = user_to
+			user.username = user_to['username']
+			user.avatar_url = user_to['avatar_url']
+			user.password = user_to['password']
+			List.append(user)
+		return List[index:min(index+amount,len(List))]
 
-    def get_following(self, index=0, amount=10):
+	def get_following(self, index=0, amount=10):
         """
         get a user's following by username
 
