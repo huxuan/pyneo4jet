@@ -251,6 +251,18 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
+		with db.transaction:
+			tweet_idx = db.node.indexes.get('tweets')
+			self.tweet_node = db.node();
+			self.tweet_node['username'] = self.username
+			self.tweet_node['text'] = self.text
+			self.tweet_node['created_at'] = self.created_at
+			self.tweet_node['tid'] = self.tid
+			user_idx = db.node.indexes.get('users')
+			s_node = user_idx['username'][self.username].single
+			self.tweet_node.SEND(s_node)
+			tweet_idx['tid'][self.tid]=self.tweet_node
+		return True
         pass
 
     def remove(self):
