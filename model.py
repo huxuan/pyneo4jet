@@ -21,10 +21,9 @@ class User(object):
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username='',avatar_url='',password='123'):
+    def __init__(self, username='', password='123'):
         """Init User"""
         self.username = username
-        self.avatar_url = avatar_url
         self.password = password
         self.user_node =''
 
@@ -41,7 +40,6 @@ class User(object):
         user = User()
         user.username = username
         user.user_node = user_idx['username'][username]
-        user.avatar_url = user.user_node.avatar_url
         user.password = user.user_node.password
         return user
 
@@ -82,7 +80,6 @@ class User(object):
         with db.transaction:
             self.user_node = db.node()
             self.user_node['username'] = self.username
-            self.user_node['avatar_url'] = self.avatar_url
             self.user_node['password'] = self.password
             user_idx['username'][self.username] = self.user_node
         print self.user_node['username']
@@ -157,7 +154,6 @@ class User(object):
             user = User()
             user.user_node = user_to
             user.username = user_to['username']
-            user.avatar_url = user_to['avatar_url']
             user.password = user_to['password']
             List.append(user)
         return List[index:min(index+amount,len(List))]
@@ -181,7 +177,6 @@ class User(object):
             user = User()
             user.user_node = user_to
             user.username = user_to['username']
-            user.avatar_url = user_to['avatar_url']
             user.password = user_to['password']
             List.append(user)
         return List[index:min(index+amount,len(List))]
