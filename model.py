@@ -56,7 +56,11 @@ class User(object):
         :type password: string
         :rtype: true if authentication is ok, false otherwise
         """
-        pass
+		user_idx = db.node.indexes.get('users')
+		user.user_node = user_idx['username'][username].single
+		if user.user_node.password == password:
+			return True
+		return False
 
     @staticmethod
     def add(username, password, password_confirm, invitation):
