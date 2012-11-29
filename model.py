@@ -128,7 +128,15 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of unfollow action
         """
-		pass
+		user_idx = db.node.indexes.get('users')
+		self.user_node = user_idx['username'][self.username].single
+		with db.transaction:
+			for rel in self.user_node.FOLLOW.outgoing:
+				f_node = rel.end
+				if f_node['username'] == username:
+					rel.delete()
+					return True,'The user '+username+' has been unfollowed sucessfully!'
+		return False,'The user '+self.username+' does not follow '+username+'!'
 
 	def get_followers(self, index=0, amount=10):
         """
