@@ -109,9 +109,18 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of follow action
         """
-        pass
+		user_idx = db.node.indexes.get('users')
+		self.user_node = user_idx['username'][self.username].single
+		for rel in self.user_node.FOLLOW.outgoing:
+			f_node = rel.end
+			if f_node['username'] == username:
+				return False,'The user '+username+' has been followed by '+self.username+'!'
+		follow_user = user_idx['username'][username].single
+		with db.transaction:
+			self.user_node.FOLLOW(follow_user)
+		return True
 
-    def unfollow(self, username):
+	def unfollow(self, username):
         """
         A user unfollow one person named username
 
@@ -119,9 +128,9 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of unfollow action
         """
-        pass
+		pass
 
-    def get_followers(self, index=0, amount=10):
+	def get_followers(self, index=0, amount=10):
         """
         get a user's followers by username
 
