@@ -37,7 +37,13 @@ class User(object):
         :type username: string
         :rtype: instance of user
         """
-        pass
+		user_idx = db.node.indexes.get('users')
+		user = User()
+		user.username = username
+		user.user_node = user_idx['username'][username]
+		user.avatar_url = user.user_node.avatar_url
+		user.password = user.user_node.password
+		return user
 
     @staticmethod
     def auth(username, password):
