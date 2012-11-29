@@ -72,7 +72,21 @@ class User(object):
         Note:
             Before add there needs a check!
         """
-        pass
+		if(self.username == ''):
+			return False,'The username should not be empty!'
+		user_idx = db.node.indexes.get('users')
+		hits = user_idx['username'][self.username]
+		if(len(hits)>0):
+			return False,'The username ' + self.username + ' has been used!'
+		hits.close()
+		with db.transaction:
+			self.user_node = db.node()
+			self.user_node['username'] = self.username
+			self.user_node['avatar_url'] = self.avatar_url
+			self.user_node['password'] = self.password
+			user_idx['username'][self.username] = self.user_node
+		print self.user_node['username']
+		return True,'Welcome!'
 
     def update(self, username):
         """
