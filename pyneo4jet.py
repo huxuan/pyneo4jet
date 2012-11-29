@@ -78,7 +78,7 @@ def profile_get(username):
         if so add an profile edit button
         if not follow button or followed status
 
-        Use 'action' param to judge whether to edit profile or change password
+        Use 'action' param to judge whether to update profile or password
         if it is 'profile', show profile update form
         if it is 'password', show password update form
     """
@@ -93,14 +93,30 @@ def profile_get(username):
         return template('profile', user=user, tweets=tweets)
 
 @post('/<username>/')
-def profile_update(username):
+def profile_post(username):
     """
-    Update user's profile
+    Update user's profile or password
 
     :param username: username of the user
     :type username: string
     :rtype: profile page of the user
+
+    Note:
+        Use 'action' param to judge whether to update profile or password
     """
+    user = User.get(username)
+    owner = request.get_cookie('username', secret=COOKIES_SECRET)
+    action = request.GET.get('action', '')
+    if action == 'profile':
+        # TODO(huxuan): Need to check when no file uploaded
+        avatar = request.files.get('avatar')
+        avatar_file = file('images/avatar_%s%s' % (username,
+            os.path.splitext(avatar.filename), ), 'w')
+        for line in avatar.readlines():
+            print >> avatar_file, line
+        avatar_file.close()
+        user.update(request.forms)
+
     return 'POST /%s/' % username
 
 @get('/<username>/timeline/')

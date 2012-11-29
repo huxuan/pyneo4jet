@@ -24,9 +24,9 @@ class User(object):
     def __init__(self, username='',avatar_url='',password='123'):
         """Init User"""
         self.username = username
-		self.avatar_url = avatar_url
-		self.password = password
-		self.user_node =''
+        self.avatar_url = avatar_url
+        self.password = password
+        self.user_node =''
 
     @staticmethod
     def get(username):
@@ -37,13 +37,13 @@ class User(object):
         :type username: string
         :rtype: instance of user
         """
-		user_idx = db.node.indexes.get('users')
-		user = User()
-		user.username = username
-		user.user_node = user_idx['username'][username]
-		user.avatar_url = user.user_node.avatar_url
-		user.password = user.user_node.password
-		return user
+        user_idx = db.node.indexes.get('users')
+        user = User()
+        user.username = username
+        user.user_node = user_idx['username'][username]
+        user.avatar_url = user.user_node.avatar_url
+        user.password = user.user_node.password
+        return user
 
     @staticmethod
     def auth(username, password):
@@ -56,11 +56,11 @@ class User(object):
         :type password: string
         :rtype: true if authentication is ok, false otherwise
         """
-		user_idx = db.node.indexes.get('users')
-		user.user_node = user_idx['username'][username].single
-		if user.user_node.password == password:
-			return True
-		return False
+        user_idx = db.node.indexes.get('users')
+        user.user_node = user_idx['username'][username].single
+        if user.user_node.password == password:
+            return True
+        return False
 
     @staticmethod
     def add(username, password, password_confirm, invitation):
@@ -72,21 +72,21 @@ class User(object):
         Note:
             Before add there needs a check!
         """
-		if(self.username == ''):
-			return False,'The username should not be empty!'
-		user_idx = db.node.indexes.get('users')
-		hits = user_idx['username'][self.username]
-		if(len(hits)>0):
-			return False,'The username ' + self.username + ' has been used!'
-		hits.close()
-		with db.transaction:
-			self.user_node = db.node()
-			self.user_node['username'] = self.username
-			self.user_node['avatar_url'] = self.avatar_url
-			self.user_node['password'] = self.password
-			user_idx['username'][self.username] = self.user_node
-		print self.user_node['username']
-		return True,'Welcome!'
+        if(self.username == ''):
+            return False,'The username should not be empty!'
+        user_idx = db.node.indexes.get('users')
+        hits = user_idx['username'][self.username]
+        if(len(hits)>0):
+            return False,'The username ' + self.username + ' has been used!'
+        hits.close()
+        with db.transaction:
+            self.user_node = db.node()
+            self.user_node['username'] = self.username
+            self.user_node['avatar_url'] = self.avatar_url
+            self.user_node['password'] = self.password
+            user_idx['username'][self.username] = self.user_node
+        print self.user_node['username']
+        return True,'Welcome!'
 
     def update(self, username):
         """
@@ -109,18 +109,18 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of follow action
         """
-		user_idx = db.node.indexes.get('users')
-		self.user_node = user_idx['username'][self.username].single
-		for rel in self.user_node.FOLLOW.outgoing:
-			f_node = rel.end
-			if f_node['username'] == username:
-				return False,'The user '+username+' has been followed by '+self.username+'!'
-		follow_user = user_idx['username'][username].single
-		with db.transaction:
-			self.user_node.FOLLOW(follow_user)
-		return True
+        user_idx = db.node.indexes.get('users')
+        self.user_node = user_idx['username'][self.username].single
+        for rel in self.user_node.FOLLOW.outgoing:
+            f_node = rel.end
+            if f_node['username'] == username:
+                return False,'The user '+username+' has been followed by '+self.username+'!'
+        follow_user = user_idx['username'][username].single
+        with db.transaction:
+            self.user_node.FOLLOW(follow_user)
+        return True
 
-	def unfollow(self, username):
+    def unfollow(self, username):
         """
         A user unfollow one person named username
 
@@ -128,17 +128,17 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of unfollow action
         """
-		user_idx = db.node.indexes.get('users')
-		self.user_node = user_idx['username'][self.username].single
-		with db.transaction:
-			for rel in self.user_node.FOLLOW.outgoing:
-				f_node = rel.end
-				if f_node['username'] == username:
-					rel.delete()
-					return True,'The user '+username+' has been unfollowed sucessfully!'
-		return False,'The user '+self.username+' does not follow '+username+'!'
+        user_idx = db.node.indexes.get('users')
+        self.user_node = user_idx['username'][self.username].single
+        with db.transaction:
+            for rel in self.user_node.FOLLOW.outgoing:
+                f_node = rel.end
+                if f_node['username'] == username:
+                    rel.delete()
+                    return True,'The user '+username+' has been unfollowed sucessfully!'
+        return False,'The user '+self.username+' does not follow '+username+'!'
 
-	def get_followers(self, index=0, amount=10):
+    def get_followers(self, index=0, amount=10):
         """
         get a user's followers by username
 
@@ -148,21 +148,21 @@ class User(object):
         :type index: int
         :rtype: list of followers/user instances
         """
-		user_idx = db.node.indexes.get('users')
-		self.user_node = user_idx['username'][self.username].single
-		user_from = user_idx['username'][username].single
-		List = []
-		for relationship in user_from.FOLLOW.incoming:
-			user_to = relationship.start
-			user = User()
-			user.user_node = user_to
-			user.username = user_to['username']
-			user.avatar_url = user_to['avatar_url']
-			user.password = user_to['password']
-			List.append(user)
-		return List[index:min(index+amount,len(List))]
+        user_idx = db.node.indexes.get('users')
+        self.user_node = user_idx['username'][self.username].single
+        user_from = user_idx['username'][username].single
+        List = []
+        for relationship in user_from.FOLLOW.incoming:
+            user_to = relationship.start
+            user = User()
+            user.user_node = user_to
+            user.username = user_to['username']
+            user.avatar_url = user_to['avatar_url']
+            user.password = user_to['password']
+            List.append(user)
+        return List[index:min(index+amount,len(List))]
 
-	def get_following(self, index=0, amount=10):
+    def get_following(self, index=0, amount=10):
         """
         get a user's following by username
 
@@ -172,19 +172,19 @@ class User(object):
         :type index: int
         :rtype: list of following/user instances
         """
-		user_idx = db.node.indexes.get('users')
-		self.user_node = user_idx['username'][self.username].single
-		user_from = user_idx['username'][username].single
-		List = []
-		for relationship in user_from.FOLLOW.outgoing:
-			user_to = relationship.end
-			user = User()
-			user.user_node = user_to
-			user.username = user_to['username']
-			user.avatar_url = user_to['avatar_url']
-			user.password = user_to['password']
-			List.append(user)
-		return List[index:min(index+amount,len(List))]
+        user_idx = db.node.indexes.get('users')
+        self.user_node = user_idx['username'][self.username].single
+        user_from = user_idx['username'][username].single
+        List = []
+        for relationship in user_from.FOLLOW.outgoing:
+            user_to = relationship.end
+            user = User()
+            user.user_node = user_to
+            user.username = user_to['username']
+            user.avatar_url = user_to['avatar_url']
+            user.password = user_to['password']
+            List.append(user)
+        return List[index:min(index+amount,len(List))]
 
     def get_tweets(self, index=0, amount=10):
         """
@@ -196,18 +196,18 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances
         """
-		user_idx = db.node.indexes.get('users')
-		user_from = user_idx['username'][username].single
-		List = []
-		for relationship in user_from.SEND.incoming:
-			tweet_node = relationship.start
-			tweet = Tweet()
-			tweet.tweet_node = tweet_node
-			tweet.text = tweet_node['text']
-			tweet.created_at = tweet_node['created_at']
-			tweet.tid = tweet_node['tid']
-			List.append(tweet)
-		return List[index:min(index+amount,len(List))]
+        user_idx = db.node.indexes.get('users')
+        user_from = user_idx['username'][username].single
+        List = []
+        for relationship in user_from.SEND.incoming:
+            tweet_node = relationship.start
+            tweet = Tweet()
+            tweet.tweet_node = tweet_node
+            tweet.text = tweet_node['text']
+            tweet.created_at = tweet_node['created_at']
+            tweet.tid = tweet_node['tid']
+            List.append(tweet)
+        return List[index:min(index+amount,len(List))]
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
@@ -222,7 +222,7 @@ class Tweet(object):
         self.username = username
         self.text = text
         self.created_at = created_at
-		self.tid = tid
+        self.tid = tid
 
     @staticmethod
     def get(tid):
@@ -233,14 +233,14 @@ class Tweet(object):
         :type tid: int
         :rtype: instance of tweet
         """
-		tweet = Tweet()
-		tweet_idx = db.node.indexes.get('tweets')
-		tweet.tweet_node = tweet_idx['tid'][tid].single
-		tweet.username = tweet.tweet_node['username']
-		tweet.text = tweet.tweet_node['text']
-		tweet.created_at = tweet.tweet_node['created_at']
-		tweet.tid = tweet.tweet_node['tid']
-		return tweet
+        tweet = Tweet()
+        tweet_idx = db.node.indexes.get('tweets')
+        tweet.tweet_node = tweet_idx['tid'][tid].single
+        tweet.username = tweet.tweet_node['username']
+        tweet.text = tweet.tweet_node['text']
+        tweet.created_at = tweet.tweet_node['created_at']
+        tweet.tid = tweet.tweet_node['tid']
+        return tweet
 
     def add(self):
         """
@@ -251,18 +251,18 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
-		with db.transaction:
-			tweet_idx = db.node.indexes.get('tweets')
-			self.tweet_node = db.node();
-			self.tweet_node['username'] = self.username
-			self.tweet_node['text'] = self.text
-			self.tweet_node['created_at'] = self.created_at
-			self.tweet_node['tid'] = self.tid
-			user_idx = db.node.indexes.get('users')
-			s_node = user_idx['username'][self.username].single
-			self.tweet_node.SEND(s_node)
-			tweet_idx['tid'][self.tid]=self.tweet_node
-		return True
+        with db.transaction:
+            tweet_idx = db.node.indexes.get('tweets')
+            self.tweet_node = db.node();
+            self.tweet_node['username'] = self.username
+            self.tweet_node['text'] = self.text
+            self.tweet_node['created_at'] = self.created_at
+            self.tweet_node['tid'] = self.tid
+            user_idx = db.node.indexes.get('users')
+            s_node = user_idx['username'][self.username].single
+            self.tweet_node.SEND(s_node)
+            tweet_idx['tid'][self.tid]=self.tweet_node
+        return True
         pass
 
     def remove(self):
