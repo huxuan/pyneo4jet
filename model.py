@@ -217,11 +217,12 @@ class Tweet(object):
     :param created_at: the time created the tweet
     :type created_at: datetime
     """
-    def __init__(self, username, text, created_at):
+    def __init__(self, username='', text='', created_at='',tid=''):
         """Init Tweet"""
         self.username = username
         self.text = text
         self.created_at = created_at
+		self.tid = tid
 
     @staticmethod
     def get(tid):
