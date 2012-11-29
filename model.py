@@ -3,7 +3,7 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-11-28
+Last modified: 2012-11-29
 Description:
     models used in pyneo4jet
 
@@ -21,9 +21,12 @@ class User(object):
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username):
+    def __init__(self, username='',avatar_url='',password='123'):
         """Init User"""
         self.username = username
+		self.avatar_url = avatar_url
+		self.password = password
+		self.user_node =''
 
     @staticmethod
     def get(username):
