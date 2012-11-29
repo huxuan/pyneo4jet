@@ -233,7 +233,14 @@ class Tweet(object):
         :type tid: int
         :rtype: instance of tweet
         """
-        pass
+		tweet = Tweet()
+		tweet_idx = db.node.indexes.get('tweets')
+		tweet.tweet_node = tweet_idx['tid'][tid].single
+		tweet.username = tweet.tweet_node['username']
+		tweet.text = tweet.tweet_node['text']
+		tweet.created_at = tweet.tweet_node['created_at']
+		tweet.tid = tweet.tweet_node['tid']
+		return tweet
 
     def add(self):
         """
