@@ -196,7 +196,18 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances
         """
-        pass
+		user_idx = db.node.indexes.get('users')
+		user_from = user_idx['username'][username].single
+		List = []
+		for relationship in user_from.SEND.incoming:
+			tweet_node = relationship.start
+			tweet = Tweet()
+			tweet.tweet_node = tweet_node
+			tweet.text = tweet_node['text']
+			tweet.created_at = tweet_node['created_at']
+			tweet.tid = tweet_node['tid']
+			List.append(tweet)
+		return List[index:min(index+amount,len(List))]
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
