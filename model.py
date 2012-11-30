@@ -206,6 +206,18 @@ class User(object):
             List.append(tweet)
         return List[index:min(index+amount,len(List))]
 
+    def get_timeline(self, index=0, amount=10):
+        """
+        get timeline items
+
+        :param index: the begin index of tweets to be shown, default to 1
+        :type index: int
+        :param index: the amount of tweets to be shown, default to 10
+        :type index: int
+        :rtype: list of tweet instances shown in the timeline
+        """
+        pass
+
 class Tweet(object):
     """Wrap of all actions related to Tweet
 
