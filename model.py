@@ -21,7 +21,7 @@ class User(object):
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username='', password='123'):
+    def __init__(self, username='', password=''):
         """Init User"""
         self.username = username
         self.password = password
