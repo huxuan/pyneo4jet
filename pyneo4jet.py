@@ -15,7 +15,7 @@ import sys
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, template, redirect
+from bottle import run, get, post, request, response, template, redirect
 
 try:
     from config import VERSION, INVITATION_CODE, COOKIES_SECRET
