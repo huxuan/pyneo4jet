@@ -50,10 +50,9 @@ class User(object):
             return False, 'The password you input twice is not the same!'
         if invitation != INVITATION_CODE:
             return False, 'The invitation code is invalid!'
-        hits = user_idx['username'][username]
-        if len(hits):
+        user_node = user_idx['username'][username].single
+        if not user_node:
             return False, 'The username %s has been used!' % username
-        hits.close()
         with db.transaction:
             user_node = db.node()
             user_node['username'] = username
