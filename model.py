@@ -15,17 +15,51 @@ from neo4j import GraphDatabase
 
 from config import DBNAME, INVITATION_CODE
 
+from database import GRAPHDB as db
+from database import USER_IDX as user_idx
+from database import TWEET_IDX as tweet_idx
+
 class User(object):
     """Wrap of all actions related to User
 
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username='', password=''):
+    def __init__(self, username, password=None):
         """Init User"""
         self.username = username
         self.password = password
-        self.user_node =''
+
+    @staticmethod
+    def add(username, password, password_confirm, invitation):
+        """
+        Add a user to neo4j database
+
+        :rtype: true or false indicates the result of add action
+
+        Note:
+            Before add there needs a check!
+        """
+        if not username:
+            return False, 'The username should not be empty!'
+        if not password:
+            return False, 'The password should not be empty!'
+        if not password_confirm:
+            return False, 'The password for confirmation should not be empty!'
+        if password != password_confirm:
+            return False, 'The password you input twice is not the same!'
+        if invitation != INVITATION_CODE:
+            return False, 'The invitation code is invalid!'
+        hits = user_idx['username'][username]
+        if len(hits):
+            return False, 'The username %s has been used!' % username
+        hits.close()
+        with db.transaction:
+            user_node = db.node()
+            user_node['username'] = username
+            user_node['password'] = password
+            user_idx['username'][username] = user_node
+        return True, ''
 
     @staticmethod
     def get(username):
@@ -36,11 +70,9 @@ class User(object):
         :type username: string
         :rtype: instance of user
         """
-        user_idx = db.node.indexes.get('users')
-        user = User()
-        user.username = username
-        user.user_node = user_idx['username'][username]
-        user.password = user.user_node.password
+        user = User(username)
+        user_node = user_idx['username'][username].single
+        user.password = user_node['password']
         return user
 
     @staticmethod
@@ -54,36 +86,12 @@ class User(object):
         :type password: string
         :rtype: true if authentication is ok, false otherwise
         """
-        user_idx = db.node.indexes.get('users')
-        user.user_node = user_idx['username'][username].single
-        if user.user_node.password == password:
-            return True
-        return False
-
-    @staticmethod
-    def add(username, password, password_confirm, invitation):
-        """
-        Add a user to neo4j database
-
-        :rtype: true or false indicates the result of add action
-
-        Note:
-            Before add there needs a check!
-        """
-        if(self.username == ''):
-            return False,'The username should not be empty!'
-        user_idx = db.node.indexes.get('users')
-        hits = user_idx['username'][self.username]
-        if(len(hits)>0):
-            return False,'The username ' + self.username + ' has been used!'
-        hits.close()
-        with db.transaction:
-            self.user_node = db.node()
-            self.user_node['username'] = self.username
-            self.user_node['password'] = self.password
-            user_idx['username'][self.username] = self.user_node
-        print self.user_node['username']
-        return True,'Welcome!'
+        user_node = user_idx['username'][username].single
+        if not user_node:
+            return False, 'User does not exist!'
+        if user_node['password'] != password:
+            return False, 'Invalid password!'
+        return True, ''
 
     def update(self, username):
         """
@@ -106,7 +114,6 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of follow action
         """
-        user_idx = db.node.indexes.get('users')
         self.user_node = user_idx['username'][self.username].single
         for rel in self.user_node.FOLLOW.outgoing:
             f_node = rel.end
@@ -125,7 +132,6 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of unfollow action
         """
-        user_idx = db.node.indexes.get('users')
         self.user_node = user_idx['username'][self.username].single
         with db.transaction:
             for rel in self.user_node.FOLLOW.outgoing:
@@ -145,7 +151,6 @@ class User(object):
         :type index: int
         :rtype: list of followers/user instances
         """
-        user_idx = db.node.indexes.get('users')
         self.user_node = user_idx['username'][self.username].single
         user_from = user_idx['username'][username].single
         List = []
@@ -168,7 +173,6 @@ class User(object):
         :type index: int
         :rtype: list of following/user instances
         """
-        user_idx = db.node.indexes.get('users')
         self.user_node = user_idx['username'][self.username].single
         user_from = user_idx['username'][username].single
         List = []
@@ -191,7 +195,6 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances
         """
-        user_idx = db.node.indexes.get('users')
         user_from = user_idx['username'][username].single
         List = []
         for relationship in user_from.SEND.incoming:
@@ -229,7 +232,6 @@ class Tweet(object):
         :rtype: instance of tweet
         """
         tweet = Tweet()
-        tweet_idx = db.node.indexes.get('tweets')
         tweet.tweet_node = tweet_idx['tid'][tid].single
         tweet.username = tweet.tweet_node['username']
         tweet.text = tweet.tweet_node['text']
@@ -247,13 +249,11 @@ class Tweet(object):
             Before add there needs a check!
         """
         with db.transaction:
-            tweet_idx = db.node.indexes.get('tweets')
             self.tweet_node = db.node();
             self.tweet_node['username'] = self.username
             self.tweet_node['text'] = self.text
             self.tweet_node['created_at'] = self.created_at
             self.tweet_node['tid'] = self.tid
-            user_idx = db.node.indexes.get('users')
             s_node = user_idx['username'][self.username].single
             self.tweet_node.SEND(s_node)
             tweet_idx['tid'][self.tid]=self.tweet_node
