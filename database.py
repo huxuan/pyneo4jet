@@ -16,12 +16,14 @@ from neo4j import GraphDatabase
 
 from config import DBNAME
 
-def indexs_create():
-    """
-    Create indexs for database
-    """
-    db = GraphDatabase(DBNAME)
-    with db.transaction:
-        user_idx = db.node.indexes.create('users')
-        tweet_idx = db.node.indexes.create('tweets')
-    db.shutdown()
+GRAPHDB = GraphDatabase('database')
+
+if GRAPHDB.node.indexes.exists('user'):
+    USER_IDX = GRAPHDB.node.indexes.get('user')
+else:
+    USER_IDX = GRAPHDB.node.indexes.create('user')
+
+if GRAPHDB.node.indexes.exists('tweet'):
+    TWEET_IDX = GRAPHDB.node.indexes.get('tweet')
+else:
+    TWEET_IDX = GRAPHDB.node.indexes.create('tweet')
