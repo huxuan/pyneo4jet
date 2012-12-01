@@ -25,9 +25,10 @@ class User(object):
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username, password=None):
+    def __init__(self, username, password=None, avatar='/images/default.png'):
         """Init User"""
         self.username = username
+        self.avatar = avatar
         self.password = password
 
     @staticmethod
@@ -53,10 +54,12 @@ class User(object):
         user_node = user_idx['username'][username].single
         if not user_node:
             return False, 'The username %s has been used!' % username
+        user = User(username, password)
         with db.transaction:
             user_node = db.node()
-            user_node['username'] = username
-            user_node['password'] = password
+            user_node['username'] = user.username
+            user_node['password'] = user.password
+            user_node['avatar'] = user.avatar
             user_idx['username'][username] = user_node
         return True, ''
 
@@ -72,6 +75,7 @@ class User(object):
         user = User(username)
         user_node = user_idx['username'][username].single
         user.password = user_node['password']
+        user.avatar = user_node['avatar']
         return user
 
     @staticmethod
@@ -194,17 +198,17 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances
         """
-        user_from = user_idx['username'][username].single
+        user_from = user_idx['username'][self.username].single
         List = []
         for relationship in user_from.SEND.incoming:
             tweet_node = relationship.start
             tweet = Tweet()
-            tweet.tweet_node = tweet_node
             tweet.text = tweet_node['text']
+            tweet.username = tweet_node['username']
             tweet.created_at = tweet_node['created_at']
             tweet.tid = tweet_node['tid']
             List.append(tweet)
-        return List[index:min(index+amount,len(List))]
+        return List[index : min(index + amount, len(List))]
 
     def get_timeline(self, index=0, amount=10):
         """
