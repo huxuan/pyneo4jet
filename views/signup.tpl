@@ -12,4 +12,4 @@
 %if defined('msg'):
     <div>{{msg}}</div>
 %end
-%rebase base title="Sign Up", username=get('username')
+%rebase base title="Sign Up"
