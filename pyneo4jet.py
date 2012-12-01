@@ -84,6 +84,7 @@ def profile_get(username):
         if it is 'profile', show profile update form
         if it is 'password', show password update form
     """
+    # TODO(huxuan): Need to check whether username belongs to the user
     user = User.get(username)
     action = request.GET.get('action', '')
     if action == 'profile':
