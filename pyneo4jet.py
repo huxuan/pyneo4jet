@@ -24,6 +24,7 @@ except ImportError:
     sys.exit(1)
 
 from model import User, Tweet
+from database import GRAPHDB as db
 
 @get('/')
 def index_get():
@@ -181,8 +182,14 @@ def main():
         port = sys.argv[1]
     else:
         port = 8888
-    run(server='gevent', host='0.0.0.0', port=port,
-        debug=(VERSION != 'production'))
+    try:
+        run(server='gevent', host='0.0.0.0', port=port,
+            debug=(VERSION != 'production'))
+    except:
+        pass
+    finally:
+        print '[MSG] Please wait neo4j to shutdown!'
+        db.shutdown()
 
 if __name__ == '__main__':
     main()
