@@ -8,4 +8,4 @@
 % if defined('msg'):
     <div>{{msg}}</div>
 % end
-% rebase base title="SignIn",username=get('username')
+% rebase base title="SignIn"
