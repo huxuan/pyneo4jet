@@ -1,5 +1,5 @@
 <div>{{user.username}}</div>
-<div><img src={{user.avatar_url}} /></div>
+<div><img src={{user.avatar}} /></div>
 % for tweet in tweets:
 <div>
     <div>{{tweet.username}}</div>
