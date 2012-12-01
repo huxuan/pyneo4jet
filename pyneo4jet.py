@@ -15,7 +15,8 @@ import sys
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, response, template, redirect
+from bottle import run, get, post, request, response
+from bottle import template, redirect, static_file
 
 try:
     from config import VERSION, INVITATION_CODE, COOKIES_SECRET
@@ -175,6 +176,13 @@ def following(username, index=0):
     :rtype: following list page
     """
     return 'GET /%s/following/%d' % (username, index, )
+
+@get('/images/<filename:path>')
+def images(filename):
+    """
+    Retrun static images
+    """
+    return static_file(filename, root='images/')
 
 def main():
     """Parse the args and run the server"""
