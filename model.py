@@ -52,7 +52,7 @@ class User(object):
         if invitation != INVITATION_CODE:
             return False, 'The invitation code is invalid!'
         user_node = user_idx['username'][username].single
-        if not user_node:
+        if user_node:
             return False, 'The username %s has been used!' % username
         user = User(username, password)
         with db.transaction:
