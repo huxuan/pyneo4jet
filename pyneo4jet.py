@@ -89,7 +89,7 @@ def profile_get(username):
     elif action == 'password':
         return template('password_update')
     else:
-        tweets = user.get_tweet()
+        tweets = user.get_tweets()
         return template('profile', user=user, tweets=tweets)
 
 @post('/<username>/')
