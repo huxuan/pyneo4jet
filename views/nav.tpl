@@ -1,6 +1,6 @@
 <div class="nav">
     |<a href="/">Home</a></li>|
-    % if defined(username):
+    % if defined('username') and username:
     <a href="/{{username}}/">{{username}}</a>|
     <a href="/{{username}}/tweets/">Tweets</a>|
     <a href="/{{username}}/followers/">Followers</a>|
