@@ -178,7 +178,13 @@ def followers(username, index=0):
     :type index: int
     :rtype: followers list page
     """
-    return 'GET /%s/followers/%d' % (username, index, )
+    user = User.get(username)
+    users = user.get_followers(index)
+    return template('users',
+        title='%s\'s followers' % username,
+        username=username,
+        users=users,
+    )
 
 @get('/<username>/following/')
 @get('/<username>/following/<index:int>')
