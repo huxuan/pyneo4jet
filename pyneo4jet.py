@@ -84,16 +84,17 @@ def profile_get(username):
         if it is 'profile', show profile update form
         if it is 'password', show password update form
     """
-    # TODO(huxuan): Need to check whether username belongs to the user
     user = User.get(username)
+    owner = request.get_cookie('username', secret=COOKIES_SECRET)
     action = request.GET.get('action', '')
-    if action == 'profile':
-        return template('profile_update', user=user)
-    elif action == 'password':
-        return template('password_update')
-    elif action == 'signout':
-        response.set_cookie('username', '', secret=COOKIES_SECRET)
-        return template('signin')
+    if owner == username:
+        if action == 'profile':
+            return template('profile_update', user=user)
+        elif action == 'password':
+            return template('password_update')
+        elif action == 'signout':
+            response.set_cookie('username', '', secret=COOKIES_SECRET)
+            return template('signin')
     else:
         tweets = user.get_tweets()
         return template('profile', user=user, tweets=tweets)
