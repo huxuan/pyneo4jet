@@ -287,7 +287,6 @@ class Tweet(object):
             self.tweet_node.SEND(s_node)
             tweet_idx['tid'][self.tid]=self.tweet_node
         return True
-        pass
 
     def remove(self):
         """
