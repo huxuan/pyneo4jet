@@ -124,6 +124,14 @@ def profile_post(username):
         elif action == 'password':
             res, msg = user.update_password(request.form)
             return template('password_update', msg=msg)
+        elif action == 'tweet':
+            tweet = Tweet({
+                'username': uesrname,
+                'text': request.form.text,
+                'created_at': datetime.datetime.now()
+            })
+            res, msg = tweet.add()
+            return template('tweet_update', msg=msg)
     redirect('/%s/' % username)
 
 @get('/<username>/timeline/')
