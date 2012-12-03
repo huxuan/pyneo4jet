@@ -61,7 +61,7 @@ def index_post():
     else:
         res, msg = User.auth(username, password)
     if res:
-        response.set_cookie("username", username, secret=COOKIES_SECRET)
+        response.set_cookie('username', username, secret=COOKIES_SECRET)
         redirect('/%s/timeline/' % username)
     else:
         return template(action, username=username, msg=msg)
@@ -91,6 +91,9 @@ def profile_get(username):
         return template('profile_update', user=user)
     elif action == 'password':
         return template('password_update')
+    elif action == 'signout':
+        response.set_cookie('username', '', secret=COOKIES_SECRET)
+        return template('signin')
     else:
         tweets = user.get_tweets()
         return template('profile', user=user, tweets=tweets)
