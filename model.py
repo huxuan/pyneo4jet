@@ -244,6 +244,7 @@ class Tweet(object):
     :param created_at: the time created the tweet
     :type created_at: datetime
     """
+    # NOTE(huxuan): Maybe no tid is needed?
     def __init__(self, username='', text='', created_at='',tid=''):
         """Init Tweet"""
         self.username = username
