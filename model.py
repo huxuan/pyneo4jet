@@ -262,6 +262,7 @@ class Tweet(object):
         :rtype: instance of tweet
         """
         tweet = Tweet()
+        # NOTE(huxuan): tweet_node?
         tweet.tweet_node = tweet_idx['tid'][tid].single
         tweet.username = tweet.tweet_node['username']
         tweet.text = tweet.tweet_node['text']
