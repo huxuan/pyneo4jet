@@ -3,7 +3,7 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-11-29
+Last modified: 2012-12-03
 Description:
     models used in pyneo4jet
 

@@ -4,7 +4,7 @@
 File: database.py
 Author: huxuan - i(at)huxuan.org
 Created: 2012-11-28
-Last modified: 2012-11-28
+Last modified: 2012-11-30
 Description:
     Actions related to database only
 
