@@ -40,13 +40,11 @@ def index_get():
         return template('signup')
     elif action == 'signout':
         response.delete_cookie('username')
-        return template('signin')
     else:
         username = request.get_cookie('username', secret=COOKIES_SECRET)
         if username:
             redirect('/%s/timeline/' % username)
-        else:
-            return template('signin')
+    return template('signin')
 
 @post('/')
 def index_post():
