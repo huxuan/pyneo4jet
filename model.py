@@ -191,7 +191,7 @@ class User(object):
         :rtype: list of following/user instances
         """
         self.user_node = user_idx['username'][self.username].single
-        user_from = user_idx['username'][username].single
+        user_from = user_idx['username'][self.username].single
         List = []
         for relationship in user_from.FOLLOW.outgoing:
             user_to = relationship.end
