@@ -162,7 +162,9 @@ def tweets(username, index=0):
     :type index: int
     :rtype: tweets page shown
     """
-    return 'GET /%s/tweets/%d' % (username, index, )
+    user = User.get(username)
+    tweets = user.get_tweets(index)
+    return template('tweets', tweets=tweets, title='%s\'s Tweets' % username)
 
 @get('/<username>/followers/')
 @get('/<username>/followers/<index:int>')
