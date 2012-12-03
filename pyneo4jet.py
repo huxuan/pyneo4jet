@@ -61,7 +61,7 @@ def index_post():
     else:
         res, msg = User.auth(username, password)
     if res:
-        response.set_cookie('username', username, secret=COOKIES_SECRET)
+        response.delete_cookie('username', secret=COOKIES_SECRET)
         redirect('/%s/timeline/' % username)
     else:
         return template(action, username=username, msg=msg)
