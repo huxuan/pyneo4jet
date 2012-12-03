@@ -35,8 +35,12 @@ def index_get():
 
     :rtype: login or signup page or redirect to timeline page
     """
-    if request.GET.get('action') == 'signup':
+    action = request.GET.get('action', '')
+    if action == 'signup':
         return template('signup')
+    elif action == 'signout':
+        response.delete_cookie('username')
+        return template('signin')
     else:
         username = request.get_cookie('username', secret=COOKIES_SECRET)
         if username:
@@ -92,9 +96,6 @@ def profile_get(username):
             return template('profile_update', user=user)
         elif action == 'password':
             return template('password_update')
-        elif action == 'signout':
-            response.delete_cookie('username', secret=COOKIES_SECRET)
-            return template('signin')
     else:
         tweets = user.get_tweets()
         return template('profile', user=user, tweets=tweets)
