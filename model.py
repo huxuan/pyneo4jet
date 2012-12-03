@@ -279,6 +279,7 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
+        # NOTE(huxuan): Need to check whether text is empty
         with db.transaction:
             self.tweet_node = db.node();
             self.tweet_node['username'] = self.username
