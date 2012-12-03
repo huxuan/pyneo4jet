@@ -148,7 +148,7 @@ def timeline(username, index=0):
     """
     user = User.get(username)
     tweets = user.get_timeline(index)
-    return template('tweets', tweets=tweets)
+    return template('tweets', tweets=tweets, title='Timeline')
 
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
