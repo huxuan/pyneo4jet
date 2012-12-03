@@ -110,17 +110,21 @@ def profile_post(username):
     user = User.get(username)
     owner = request.get_cookie('username', secret=COOKIES_SECRET)
     action = request.GET.get('action', '')
-    if action == 'profile':
-        # TODO(huxuan): Need to check when no file uploaded
-        avatar = request.files.get('avatar')
-        avatar_file = file('images/avatar_%s%s' % (username,
-            os.path.splitext(avatar.filename), ), 'w')
-        for line in avatar.readlines():
-            print >> avatar_file, line
-        avatar_file.close()
-        user.update(request.forms)
-
-    return 'POST /%s/' % username
+    if owner == username:
+        if action == 'profile':
+            # TODO(huxuan): Need to check when no file uploaded
+            avatar = request.files.get('avatar')
+            avatar_file = file('images/avatar_%s%s' % (username,
+                os.path.splitext(avatar.filename), ), 'w')
+            for line in avatar.readlines():
+                print >> avatar_file, line
+            avatar_file.close()
+            res, msg = user.update(request.form.username)
+            return template('profile_update', user=user, msg=msg)
+        elif action == 'password':
+            res, msg = user.update_password(request.form)
+            return template('password_update', msg=msg)
+    redirect('/%s/' % username)
 
 @get('/<username>/timeline/')
 @get('/<username>/timeline/<index:int>')
