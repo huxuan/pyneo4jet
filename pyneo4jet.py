@@ -187,7 +187,7 @@ def followers(username, index=0):
     :rtype: followers list page
     """
     user = User.get(username)
-    users = user.get_followers(index)
+    users = user.get_followers(index) or {}
     return template('users',
         title='%s\'s followers' % username,
         username=username,
