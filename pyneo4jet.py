@@ -148,7 +148,11 @@ def timeline(username, index=0):
     """
     user = User.get(username)
     tweets = user.get_timeline(index)
-    return template('tweets', tweets=tweets, title='Timeline')
+    return template('tweets',
+        title='Timeline',
+        username=username,
+        tweets=tweets,
+    )
 
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
@@ -164,7 +168,11 @@ def tweets(username, index=0):
     """
     user = User.get(username)
     tweets = user.get_tweets(index)
-    return template('tweets', tweets=tweets, title='%s\'s Tweets' % username)
+    return template('tweets',
+        title='%s\'s Tweets' % username,
+        username=username,
+        tweets=tweets,
+    )
 
 @get('/<username>/followers/')
 @get('/<username>/followers/<index:int>')
