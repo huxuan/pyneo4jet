@@ -146,7 +146,9 @@ def timeline(username, index=0):
     :type index: int
     :rtype: timeline page shown
     """
-    return 'GET /%s/timeline/%d' % (username, index, )
+    user = User.get(username)
+    tweets = user.get_timeline(index)
+    return template('tweets', tweets=tweets)
 
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
