@@ -147,7 +147,7 @@ def timeline(username, index=0):
     :rtype: timeline page shown
     """
     user = User.get(username)
-    tweets = user.get_timeline(index)
+    tweets = user.get_timeline(index) or {}
     return template('tweets',
         title='Timeline',
         username=username,
