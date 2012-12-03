@@ -109,6 +109,20 @@ class User(object):
         """
         pass
 
+    def update_password(self, old_pw, new_pw1, new_pw2):
+        """
+        Update a user's password
+
+        :param old_pw: old password
+        :type old_pw: string
+        :param new_pw1: new password
+        :type new_pw1: string
+        :param new_pw2: new password for comfirm
+        :type new_pw2: string
+        :rtype: true of false indicate the result and more specific msg
+        """
+        pass
+
     def follow(self, username):
         """
         A user follow one person named username
