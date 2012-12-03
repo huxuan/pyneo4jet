@@ -206,7 +206,13 @@ def following(username, index=0):
     :type index: int
     :rtype: following list page
     """
-    return 'GET /%s/following/%d' % (username, index, )
+    user = User.get(username)
+    users = user.get_following(index)
+    return template('users',
+        title='%s\'s following' % username,
+        username=username,
+        users=users,
+    )
 
 @get('/images/<filename:path>')
 def images(filename):
