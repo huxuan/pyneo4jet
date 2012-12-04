@@ -1,4 +1,4 @@
-<form action="/{{user.username}}?action=password" method="POST">
+<form action="/{{user.username}}/?action=password" method="POST">
     old password: <input type="password" name="old_pw" value=""/>
     <br />
     new password: <input type="password" name="new_pw1" value=""/>

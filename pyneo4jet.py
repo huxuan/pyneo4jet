@@ -11,6 +11,8 @@ Description:
 Copyrgiht (c) 2012 by huxuan. All rights reserved.
 License GPLv3
 """
+
+import os
 import sys
 
 import gevent.monkey
@@ -94,9 +96,8 @@ def profile_get(username):
             return template('profile_update', user=user)
         elif action == 'password':
             return template('password_update')
-    else:
-        tweets = user.get_tweets()
-        return template('profile', user=user, tweets=tweets)
+    tweets = user.get_tweets()
+    return template('profile', user=user, tweets=tweets)
 
 @post('/<username>/')
 def profile_post(username):
@@ -115,14 +116,16 @@ def profile_post(username):
     action = request.GET.get('action', '')
     if owner == username:
         if action == 'profile':
-            # TODO(huxuan): Need to check when no file uploaded
-            avatar = request.files.get('avatar')
-            avatar_file = file('images/avatar_%s%s' % (username,
-                os.path.splitext(avatar.filename), ), 'w')
-            for line in avatar.readlines():
-                print >> avatar_file, line
-            avatar_file.close()
-            res, msg = user.update(request.form.username)
+            avatar = request.files.avatar
+            username_new = request.forms.username or username
+            avatar_new = user.avatar
+            if avatar and avatar.file:
+                avatar_new = 'images/avatar_%s%s' % (username,
+                    os.path.splitext(avatar.filename)[-1], )
+                avatar_file = file(avatar_new, 'w')
+                print >>avatar_file, avatar.file.read()
+                avatar_file.close()
+            res, msg = user.update(username_new, avatar_new)
             return template('profile_update', user=user, msg=msg)
         elif action == 'password':
             res, msg = user.update_password(request.form)

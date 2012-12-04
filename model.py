@@ -96,18 +96,20 @@ class User(object):
             return False, 'Invalid password!'
         return True, ''
 
-    def update(self, username):
+    def update(self, username, avatar):
         """
         Update a user's profile with username
 
         :param username: the username of the user
         :type username: string
+        :param avatar: the path of the user's avatar
+        :type avatar: string
         :rtype: true or false indicated the result of update action
 
         Notes:
             Before update there needs a check!
         """
-        pass
+        return True, ''
 
     def update_password(self, old_pw, new_pw1, new_pw2):
         """
