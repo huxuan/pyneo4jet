@@ -90,7 +90,8 @@ def profile_get(username):
         if it is 'password', show password update form
     """
     user = User.get(username)
-    owner = request.get_cookie('username', secret=COOKIES_SECRET)
+    ownername = request.get_cookie('username', secret=COOKIES_SECRET)
+    owner = User.get(ownername)
     action = request.GET.get('action', '')
     if owner == username:
         if action == 'profile':
@@ -98,7 +99,9 @@ def profile_get(username):
         elif action == 'password':
             return template('password_update', user=user)
     tweets = user.get_tweets()
-    return template('profile', user=user, owner=owner, tweets=tweets)
+    isfollow = owner.isfollow(username)
+    return template('profile', user=user, owner=owner, tweets=tweets,
+        isfollow=isfollow)
 
 @post('/<username>/')
 def profile_post(username):
@@ -113,9 +116,10 @@ def profile_post(username):
         Use 'action' param to judge whether to update profile or password
     """
     user = User.get(username)
-    owner = request.get_cookie('username', secret=COOKIES_SECRET)
+    ownername = request.get_cookie('username', secret=COOKIES_SECRET)
+    owner = User.get(ownername)
     action = request.GET.get('action', '')
-    if owner == username:
+    if ownername == username:
         if action == 'profile':
             avatar = request.files.avatar
             username_new = request.forms.username or username
@@ -142,6 +146,10 @@ def profile_post(username):
             }
             res, msg = Tweet.add(**param)
             return template('tweet_update', user=user, tweet_msg=msg)
+        elif action == 'follow':
+            owner.follow(username)
+        elif action == 'unfollow':
+            owner.unfollow(username)
     redirect('/%s/' % username)
 
 @get('/<username>/timeline/')

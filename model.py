@@ -125,6 +125,17 @@ class User(object):
         """
         return True, ''
 
+    def isfollow(self, username):
+        """
+        Check whether user has followed user called username
+
+        :param username: the username of the person to follow
+        :type username: string
+        :rtype: true or false indicates the relationship
+        """
+        # NOTE(huxuan): HERE is another more method need to be implemented
+        return True
+
     def follow(self, username):
         """
         A user follow one person named username
