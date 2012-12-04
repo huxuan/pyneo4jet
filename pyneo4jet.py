@@ -230,6 +230,13 @@ def images(filename):
     """
     return static_file(filename, root='images/')
 
+@get('/favicon.ico')
+def images():
+    """
+    Retrun favicon images
+    """
+    return static_file('favicon.ico', root='images/')
+
 def main():
     """Parse the args and run the server"""
     if len(sys.argv) == 2 and sys.argv[1].isdigit():
