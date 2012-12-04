@@ -95,7 +95,7 @@ def profile_get(username):
         if action == 'profile':
             return template('profile_update', user=user)
         elif action == 'password':
-            return template('password_update')
+            return template('password_update', user=user)
     tweets = user.get_tweets()
     return template('profile', user=user, tweets=tweets)
 
@@ -128,8 +128,11 @@ def profile_post(username):
             res, msg = user.update(username_new, avatar_new)
             return template('profile_update', user=user, msg=msg)
         elif action == 'password':
-            res, msg = user.update_password(request.form)
-            return template('password_update', msg=msg)
+            old_pw = request.forms.get('old_pw')
+            new_pw1 = request.forms.get('new_pw1')
+            new_pw2 = request.forms.get('new_pw2')
+            res, msg = user.update_password(old_pw, new_pw1, new_pw2)
+            return template('password_update', user=user, msg=msg)
         elif action == 'tweet':
             tweet = Tweet({
                 'username': uesrname,

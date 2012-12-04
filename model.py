@@ -123,7 +123,7 @@ class User(object):
         :type new_pw2: string
         :rtype: true of false indicate the result and more specific msg
         """
-        pass
+        return True, ''
 
     def follow(self, username):
         """
