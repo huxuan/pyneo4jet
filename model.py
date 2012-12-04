@@ -222,7 +222,8 @@ class User(object):
             tweet.text = tweet_node['text']
             tweet.username = tweet_node['username']
             tweet.created_at = tweet_node['created_at']
-            tweet.tid = tweet_node['tid']
+            # NOTE(huxuan): Currently comment it for further discussion
+            # tweet.tid = tweet_node['tid']
             List.append(tweet)
         return List[index : min(index + amount, len(List))]
 
@@ -264,15 +265,14 @@ class Tweet(object):
         :rtype: instance of tweet
         """
         tweet = Tweet()
-        # NOTE(huxuan): tweet_node?
-        tweet.tweet_node = tweet_idx['tid'][tid].single
         tweet.username = tweet.tweet_node['username']
         tweet.text = tweet.tweet_node['text']
         tweet.created_at = tweet.tweet_node['created_at']
         tweet.tid = tweet.tweet_node['tid']
         return tweet
 
-    def add(self):
+    @staticmethod
+    def add(username, text, created_at):
         """
         Add a tweet to neo4j database
 
@@ -281,17 +281,18 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
-        # NOTE(huxuan): Need to check whether text is empty
-        with db.transaction:
-            self.tweet_node = db.node();
-            self.tweet_node['username'] = self.username
-            self.tweet_node['text'] = self.text
-            self.tweet_node['created_at'] = self.created_at
-            self.tweet_node['tid'] = self.tid
-            s_node = user_idx['username'][self.username].single
-            self.tweet_node.SEND(s_node)
-            tweet_idx['tid'][self.tid]=self.tweet_node
-        return True
+        # NOTE(huxuan): If tid is needed we should manually generate it
+        if text:
+            with db.transaction:
+                tweet_node = db.node();
+                tweet_node['username'] = username
+                tweet_node['text'] = text
+                tweet_node['created_at'] = created_at
+                user_node = user_idx['username'][username].single
+                tweet_node.SEND(user_node)
+            return True, ''
+        else:
+            return False, 'Tweet should not be empty!'
 
     def remove(self):
         """

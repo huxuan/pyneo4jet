@@ -14,6 +14,7 @@ License GPLv3
 
 import os
 import sys
+import datetime
 
 import gevent.monkey
 gevent.monkey.patch_all()
@@ -97,7 +98,7 @@ def profile_get(username):
         elif action == 'password':
             return template('password_update', user=user)
     tweets = user.get_tweets()
-    return template('profile', user=user, tweets=tweets)
+    return template('profile', user=user, owner=owner, tweets=tweets)
 
 @post('/<username>/')
 def profile_post(username):
@@ -134,13 +135,13 @@ def profile_post(username):
             res, msg = user.update_password(old_pw, new_pw1, new_pw2)
             return template('password_update', user=user, msg=msg)
         elif action == 'tweet':
-            tweet = Tweet({
-                'username': uesrname,
-                'text': request.form.text,
-                'created_at': datetime.datetime.now()
-            })
-            res, msg = tweet.add()
-            return template('tweet_update', msg=msg)
+            param = {
+                'username': username,
+                'text': request.forms.text,
+                'created_at': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            }
+            res, msg = Tweet.add(**param)
+            return template('tweet_update', user=user, tweet_msg=msg)
     redirect('/%s/' % username)
 
 @get('/<username>/timeline/')
