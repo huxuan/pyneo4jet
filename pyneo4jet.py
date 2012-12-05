@@ -93,7 +93,7 @@ def profile_get(username):
     ownername = request.get_cookie('username', secret=COOKIES_SECRET)
     owner = User.get(ownername)
     action = request.GET.get('action', '')
-    if owner == username:
+    if ownername == username:
         if action == 'profile':
             return template('profile_update', user=user)
         elif action == 'password':
