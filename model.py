@@ -264,7 +264,13 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances shown in the timeline
         """
-        pass
+        List = []
+        last_tweet = tweet_ref['tot_tweet']
+        for i in range(last_tweet-index:last_tweet-(index+amout)):
+            tweet = Tweet()
+            tweet.get(i)
+            List.append(tweet)  
+        return Lsit
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
@@ -317,6 +323,11 @@ class Tweet(object):
                 tweet_node['created_at'] = created_at
                 user_node = user_idx['username'][username].single
                 tweet_node.SEND(user_node)
+                
+                tweet_node.INSTANCE_OF(tweet_ref)
+                tweet_node.tid = tweet_ref['tot_tweet'] + 1
+                tweet_ref['tot_tweet'] = tweet_ref['tot_tweet'] + 1
+                tweet_idx['tid'][tweet_node.tid] = tweet_node
             return True, ''
         else:
             return False, 'Tweet should not be empty!'
