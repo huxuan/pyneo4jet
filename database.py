@@ -16,7 +16,7 @@ from neo4j import GraphDatabase
 
 from config import DBNAME
 
-GRAPHDB = GraphDatabase('database')
+GRAPHDB = GraphDatabase(DBNAME)
 
 if GRAPHDB.node.indexes.exists('user'):
     USER_IDX = GRAPHDB.node.indexes.get('user')
