@@ -19,6 +19,17 @@ from database import GRAPHDB as db
 from database import USER_IDX as user_idx
 from database import TWEET_IDX as tweet_idx
 
+from database import TWEET_REF as tweet_ref
+"""
+tweet_ref is the reference node which contains number of total tweets and is connected to every tweet.
+tweet_ref should be initialized as:
+    tweet_ref = db.node()
+    tweet_ref['tot_tweet'] = 0 (this could be optional)
+Every new tweet will be connected as:
+    tweet.INSTANCE_OF(tweet_ref)
+    tweet.tid = tweet_ref['tot_tweet']+1 (this could be optional)
+    tweet_ref['tot_tweet'] = tweet.tid (this could be optional)
+"""
 class User(object):
     """Wrap of all actions related to User
 
