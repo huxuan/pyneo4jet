@@ -31,7 +31,13 @@ from model import User, Tweet
 from database import GRAPHDB as db
 
 def login_required(func):
+    """
+    Decorator for login check
+    """
     def login_check(**kwargs):
+        """
+        Check whether user has signed in
+        """
         ownername = request.get_cookie('username', secret=COOKIES_SECRET)
         if ownername:
             return func(**kwargs)
@@ -40,7 +46,7 @@ def login_required(func):
     return login_check
 
 @error(404)
-def error404(error):
+def error404(dummy):
     """
     Actions when 404 Not Found
     """
@@ -164,13 +170,12 @@ def profile_post(username):
             res, msg = user.update_password(old_pw, new_pw1, new_pw2)
             return template('password_update', user=user, msg=msg)
         elif action == 'tweet':
-            param = {
-                'username': username,
-                'text': request.forms.text,
-                'created_at':
+            res, msg = Tweet.add(
+                username = username,
+                text = request.forms.text,
+                created_at =
                     datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            }
-            res, msg = Tweet.add(**param)
+            )
             return template('tweet_update', user=user, tweet_msg=msg)
         elif action == 'follow':
             owner.follow(username)
@@ -285,7 +290,7 @@ def main():
     try:
         run(server='gevent', host='0.0.0.0', port=port,
             debug=(VERSION != 'production'))
-    except:
+    except KeyError:
         pass
     finally:
         print '[MSG] Please wait neo4j to shutdown!'
