@@ -337,4 +337,11 @@ class Tweet(object):
 
         :rtype: true or false indicates the result of remove action
         """
-        pass
+        tweet_node = tweet_idx['tid'][self.tid].single
+        if not tweet_node:
+            return False, 'The tweet does not exist!'
+        with db.transaction:
+            for rel in tweet_node.SEND:
+                rel.delete()
+            tweet_idx['tid'][self.tid].single.delete()
+        return True, ''
