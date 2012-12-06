@@ -18,7 +18,6 @@ from config import DBNAME, INVITATION_CODE
 from database import GRAPHDB as db
 from database import USER_IDX as user_idx
 from database import TWEET_IDX as tweet_idx
-
 from database import TWEET_REF as tweet_ref
 """
 tweet_ref is the reference node which contains number of total tweets and is connected to every tweet.
@@ -148,7 +147,7 @@ class User(object):
         user_node = user_idx['username'][self.username].single
         for rel in user_node.FOLLOW.outgoing:
             f_node = rel.end
-            if f_node['username']=username: 
+            if f_node['username'] == username: 
                 return True
         return False
 
@@ -202,7 +201,7 @@ class User(object):
         List = []
         for relationship in user_from.FOLLOW.incoming:
             user_to = relationship.start
-            user = User()
+            user = User('','')
             user.user_node = user_to
             user.username = user_to['username']
             user.password = user_to['password']
@@ -224,7 +223,7 @@ class User(object):
         List = []
         for relationship in user_from.FOLLOW.outgoing:
             user_to = relationship.end
-            user = User()
+            user = User('','')
             user.user_node = user_to
             user.username = user_to['username']
             user.password = user_to['password']
@@ -249,8 +248,7 @@ class User(object):
             tweet.text = tweet_node['text']
             tweet.username = tweet_node['username']
             tweet.created_at = tweet_node['created_at']
-            # NOTE(huxuan): Currently comment it for further discussion
-            # tweet.tid = tweet_node['tid']
+            tweet.tid = tweet_node['tid']
             List.append(tweet)
         return List[index : min(index + amount, len(List))]
 
@@ -265,12 +263,12 @@ class User(object):
         :rtype: list of tweet instances shown in the timeline
         """
         List = []
-        last_tweet = tweet_ref['tot_tweet']
-        for i in range(last_tweet-index:last_tweet-(index+amout)):
+        last_tweet = tweet_ref['tot_tweet'] - 1
+        for i in range(max(0,last_tweet-(index+amount)),max(0,last_tweet-index)):
             tweet = Tweet()
             tweet.get(i)
             List.append(tweet)  
-        return Lsit
+        return List
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
@@ -298,11 +296,14 @@ class Tweet(object):
         :rtype: instance of tweet
         """
         tweet = Tweet()
-        tweet.username = tweet.tweet_node['username']
-        tweet.text = tweet.tweet_node['text']
-        tweet.created_at = tweet.tweet_node['created_at']
-        tweet.tid = tweet.tweet_node['tid']
-        return tweet
+        tweet_node = tweet_idx['tid'][tid].single
+        if tweet_node:
+            tweet.tweet_node = tweet_node
+            tweet.username = tweet_node['username']
+            tweet.text = tweet_node['text']
+            tweet.created_at = tweet_node['created_at']
+            tweet.tid = tweet_node['tid']
+            return tweet
 
     @staticmethod
     def add(username, text, created_at):
@@ -323,11 +324,10 @@ class Tweet(object):
                 tweet_node['created_at'] = created_at
                 user_node = user_idx['username'][username].single
                 tweet_node.SEND(user_node)
-                
-                tweet_node.INSTANCE_OF(tweet_ref)
-                tweet_node.tid = tweet_ref['tot_tweet'] + 1
+                tid = tweet_ref['tot_tweet']
+                tweet_node['tid'] = tid
                 tweet_ref['tot_tweet'] = tweet_ref['tot_tweet'] + 1
-                tweet_idx['tid'][tweet_node.tid] = tweet_node
+                tweet_idx['tid'][tid] = tweet_node
             return True, ''
         else:
             return False, 'Tweet should not be empty!'
