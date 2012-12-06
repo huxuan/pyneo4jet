@@ -30,6 +30,15 @@ except ImportError:
 from model import User, Tweet
 from database import GRAPHDB as db
 
+def login_required(func):
+    def login_check(**kwargs):
+        ownername = request.get_cookie('username', secret=COOKIES_SECRET)
+        if ownername:
+            return func(**kwargs)
+        else:
+            redirect('/')
+    return login_check
+
 @get('/')
 def index_get():
     """
@@ -72,6 +81,7 @@ def index_post():
         return template(action, username=username, msg=msg)
 
 @get('/<username>/')
+@login_required
 def profile_get(username):
     """
     Show user's profile with at most recent 10 tweets
@@ -104,6 +114,7 @@ def profile_get(username):
         isfollow=isfollow)
 
 @post('/<username>/')
+@login_required
 def profile_post(username):
     """
     Update user's profile or password
@@ -161,6 +172,7 @@ def profile_post(username):
 
 @get('/<username>/timeline/')
 @get('/<username>/timeline/<index:int>')
+@login_required
 def timeline(username, index=0):
     """
     Show user's timeline
@@ -181,6 +193,7 @@ def timeline(username, index=0):
 
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
+@login_required
 def user_tweets(username, index=0):
     """
     Show user's tweets
@@ -201,6 +214,7 @@ def user_tweets(username, index=0):
 
 @get('/<username>/followers/')
 @get('/<username>/followers/<index:int>')
+@login_required
 def followers(username, index=0):
     """
     Show user's followers
@@ -221,6 +235,7 @@ def followers(username, index=0):
 
 @get('/<username>/following/')
 @get('/<username>/following/<index:int>')
+@login_required
 def following(username, index=0):
     """
     Show user's following
