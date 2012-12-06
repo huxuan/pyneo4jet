@@ -18,7 +18,7 @@ import datetime
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, response
+from bottle import run, get, post, request, response, error
 from bottle import template, redirect, static_file
 
 try:
@@ -38,6 +38,14 @@ def login_required(func):
         else:
             redirect('/')
     return login_check
+
+@error(404)
+def error404(error):
+    """
+    Actions when 404 Not Found
+    """
+    response.status = 303
+    response.set_header('Location', '/')
 
 @get('/')
 def index_get():
