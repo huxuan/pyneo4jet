@@ -256,7 +256,7 @@ class User(object):
         last_tweet = tweet_ref['tot_tweet'] - 1
         for i in range(max(0,last_tweet-(index+amount)),max(0,last_tweet-index)):
             tweet = Tweet()
-            tweet.get(i)
+            tweet = tweet.get(i)
             List.append(tweet)  
         return List
 
