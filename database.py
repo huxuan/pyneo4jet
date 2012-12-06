@@ -27,3 +27,11 @@ if GRAPHDB.node.indexes.exists('tweet'):
     TWEET_IDX = GRAPHDB.node.indexes.get('tweet')
 else:
     TWEET_IDX = GRAPHDB.node.indexes.create('tweet')
+
+TWEET_REF_ID = 1000000
+if len(TWEET_IDX['tid'][TWEET_REF_ID]) == 0:
+    with GRAPHDB.transaction:
+        TWEET_REF = GRAPHDB.node()
+        TWEET_REF['tot_tweet'] = 0
+        TWEET_IDX['tid'][TWEET_REF_ID] = TWEET_REF
+TWEET_REF = TWEET_IDX['tid'][TWEET_REF_ID].single
