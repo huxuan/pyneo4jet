@@ -124,6 +124,15 @@ class User(object):
         :type new_pw2: string
         :rtype: true of false indicate the result and more specific msg
         """
+        user_node = user_idx['username'][self.username].single
+        if not user_node:
+            return False, 'User does not exist!'
+        if user_node['password'] != old_pw:
+            return False, 'Wrong old password!'
+        if new_pw1 != new_pw2:
+            return False, 'The new passwords do not match!'
+        with db.transaction:
+            user_node['password'] = new_pw1
         return True, ''
 
     def isfollow(self, username):
