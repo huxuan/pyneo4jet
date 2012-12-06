@@ -143,7 +143,6 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the relationship
         """
-        # NOTE(huxuan): HERE is another more method need to be implemented
         user_node = user_idx['username'][self.username].single
         for rel in user_node.FOLLOW.outgoing:
             f_node = rel.end

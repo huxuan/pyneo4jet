@@ -22,7 +22,7 @@ from bottle import run, get, post, request, response
 from bottle import template, redirect, static_file
 
 try:
-    from config import VERSION, INVITATION_CODE, COOKIES_SECRET
+    from config import VERSION, COOKIES_SECRET
 except ImportError:
     print '[Error] config.py is NEEDED! Refer to config-sample.py'
     sys.exit(1)
@@ -93,7 +93,7 @@ def profile_get(username):
     ownername = request.get_cookie('username', secret=COOKIES_SECRET)
     owner = User.get(ownername)
     action = request.GET.get('action', '')
-    if owner == username:
+    if ownername == username:
         if action == 'profile':
             return template('profile_update', user=user)
         elif action == 'password':
@@ -128,7 +128,7 @@ def profile_post(username):
                 avatar_new = 'images/avatar_%s%s' % (username,
                     os.path.splitext(avatar.filename)[-1], )
                 avatar_file = file(avatar_new, 'w')
-                print >>avatar_file, avatar.file.read()
+                print >> avatar_file, avatar.file.read()
                 avatar_file.close()
             res, msg = user.update(username_new, avatar_new)
             return template('profile_update', user=user, msg=msg)
@@ -142,7 +142,8 @@ def profile_post(username):
             param = {
                 'username': username,
                 'text': request.forms.text,
-                'created_at': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'created_at':
+                    datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             }
             res, msg = Tweet.add(**param)
             return template('tweet_update', user=user, tweet_msg=msg)
@@ -174,7 +175,7 @@ def timeline(username, index=0):
 
 @get('/<username>/tweets/')
 @get('/<username>/tweets/<index:int>')
-def tweets(username, index=0):
+def user_tweets(username, index=0):
     """
     Show user's tweets
 
@@ -240,7 +241,7 @@ def images(filename):
     return static_file(filename, root='images/')
 
 @get('/favicon.ico')
-def images():
+def favicon():
     """
     Retrun favicon images
     """
