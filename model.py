@@ -11,9 +11,7 @@ Copyrgiht (c) 2012 by huxuan. All rights reserved.
 License GPLv3
 """
 
-from neo4j import GraphDatabase
-
-from config import DBNAME, INVITATION_CODE
+from config import INVITATION_CODE
 
 from database import GRAPHDB as db
 from database import USER_IDX as user_idx
@@ -42,12 +40,8 @@ class User(object):
         Note:
             Before add there needs a check!
         """
-        if not username:
-            return False, 'The username should not be empty!'
-        if not password:
-            return False, 'The password should not be empty!'
-        if not password_confirm:
-            return False, 'The password for confirmation should not be empty!'
+        if not username or not password or not password_confirm:
+            return False, 'The username/password should not be empty!'
         if password != password_confirm:
             return False, 'The password you input twice is not the same!'
         if invitation != INVITATION_CODE:
@@ -118,12 +112,12 @@ class User(object):
         if not user_node:
             return False, 'User does not exist!'
         with db.transaction:
-            user_idx['username'][self.username].single.delete
+            user_idx['username'][self.username].single.delete()
             self.username = username
             self.avatar = avatar
             user_node['username'] = username
             user_node['avatar'] = avatar
-            user_idx['username'][username] = user_node 
+            user_idx['username'][username] = user_node
         return True, ''
 
     def update_password(self, old_pw, new_pw1, new_pw2):
@@ -160,7 +154,7 @@ class User(object):
         user_node = user_idx['username'][self.username].single
         for rel in user_node.FOLLOW.outgoing:
             f_node = rel.end
-            if f_node['username'] == username: 
+            if f_node['username'] == username:
                 return True
         return False
 
@@ -172,14 +166,14 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of follow action
         """
-        self.user_node = user_idx['username'][self.username].single
-        for rel in self.user_node.FOLLOW.outgoing:
+        user_node = user_idx['username'][self.username].single
+        for rel in user_node.FOLLOW.outgoing:
             f_node = rel.end
             if f_node['username'] == username:
-                return False,'The user '+username+' has been followed by '+self.username+'!'
+                return False, 'You have already followed %s !' % username
         follow_user = user_idx['username'][username].single
         with db.transaction:
-            self.user_node.FOLLOW(follow_user)
+            user_node.FOLLOW(follow_user)
         return True
 
     def unfollow(self, username):
@@ -190,14 +184,14 @@ class User(object):
         :type username: string
         :rtype: true or false indicates the result of unfollow action
         """
-        self.user_node = user_idx['username'][self.username].single
+        user_node = user_idx['username'][self.username].single
         with db.transaction:
-            for rel in self.user_node.FOLLOW.outgoing:
+            for rel in user_node.FOLLOW.outgoing:
                 f_node = rel.end
                 if f_node['username'] == username:
                     rel.delete()
-                    return True,'The user '+username+' has been unfollowed sucessfully!'
-        return False,'The user '+self.username+' does not follow '+username+'!'
+                    return True, 'Unfollowed user %s successfully !' % username
+        return False, 'You haven\'t follow %s yet !' % username
 
     def get_followers(self, index=0, amount=10):
         """
@@ -209,17 +203,15 @@ class User(object):
         :type index: int
         :rtype: list of followers/user instances
         """
-        self.user_node = user_idx['username'][self.username].single
         user_from = user_idx['username'][self.username].single
-        List = []
+        users_list = []
         for relationship in user_from.FOLLOW.incoming:
             user_to = relationship.start
             user = User('','')
-            user.user_node = user_to
             user.username = user_to['username']
             user.password = user_to['password']
-            List.append(user)
-        return List[index:min(index+amount,len(List))]
+            users_list.append(user)
+        return users_list[index : min(index+amount, len(users_list))]
 
     def get_following(self, index=0, amount=10):
         """
@@ -231,17 +223,15 @@ class User(object):
         :type index: int
         :rtype: list of following/user instances
         """
-        self.user_node = user_idx['username'][self.username].single
         user_from = user_idx['username'][self.username].single
-        List = []
+        users_list = []
         for relationship in user_from.FOLLOW.outgoing:
             user_to = relationship.end
             user = User('','')
-            user.user_node = user_to
             user.username = user_to['username']
             user.password = user_to['password']
-            List.append(user)
-        return List[index:min(index+amount,len(List))]
+            users_list.append(user)
+        return users_list[index : min(index+amount, len(users_list))]
 
     def get_tweets(self, index=0, amount=10):
         """
@@ -254,7 +244,7 @@ class User(object):
         :rtype: list of tweet instances
         """
         user_from = user_idx['username'][self.username].single
-        List = []
+        tweets_list = []
         for relationship in user_from.SEND.incoming:
             tweet_node = relationship.start
             tweet = Tweet()
@@ -262,8 +252,8 @@ class User(object):
             tweet.username = tweet_node.SEND.outgoing.single.end['username']
             tweet.created_at = tweet_node['created_at']
             tweet.tid = tweet_node['tid']
-            List.append(tweet)
-        return List[index : min(index + amount, len(List))]
+            tweets_list.append(tweet)
+        return tweets_list[index : min(index + amount, len(tweets_list))]
 
     def get_timeline(self, index=0, amount=10):
         """
@@ -275,12 +265,13 @@ class User(object):
         :type index: int
         :rtype: list of tweet instances shown in the timeline
         """
-        List = []
+        tweets_list = []
         last_tweet = tweet_ref['tot_tweet'] - 1
-        for i in range(max(0,last_tweet-(index+amount)),max(0,last_tweet-index)):
+        for i in range(max(0, last_tweet-(index+amount)),
+            max(0, last_tweet-index)):
             tweet = Tweet.get(i + 1)
-            List.append(tweet)  
-        return List
+            tweets_list.append(tweet)
+        return tweets_list
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
@@ -291,7 +282,7 @@ class Tweet(object):
     :type created_at: datetime
     """
     # NOTE(huxuan): Maybe no tid is needed?
-    def __init__(self, text='', created_at='',tid=''):
+    def __init__(self, text='', created_at='', tid=0):
         """Init Tweet"""
         self.username = None
         self.text = text
@@ -310,7 +301,6 @@ class Tweet(object):
         tweet = Tweet()
         tweet_node = tweet_idx['tid'][tid].single
         if tweet_node:
-            tweet.tweet_node = tweet_node
             tweet.username = tweet_node.SEND.outgoing.single.end['username']
             tweet.text = tweet_node['text']
             tweet.created_at = tweet_node['created_at']
@@ -327,10 +317,9 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
-        # NOTE(huxuan): If tid is needed we should manually generate it
         if text:
             with db.transaction:
-                tweet_node = db.node();
+                tweet_node = db.node()
                 tweet_node['text'] = text
                 tweet_node['created_at'] = created_at
                 user_node = user_idx['username'][username].single
