@@ -110,6 +110,20 @@ class User(object):
         Notes:
             Before update there needs a check!
         """
+        if not username:
+            return False, 'The username should not be empty!'
+        if not avatar:
+            return False, 'The avatar should not be empty!'
+        user_node = user_idx['username'][self.username].single
+        if not user_node:
+            return False, 'User does not exist!'
+        with db.transaction:
+            user_idx['username'][self.username].single.delete
+            self.username = username
+            self.avatar = avatar
+            user_node['username'] = username
+            user_node['avatar'] = avatar
+            user_idx['username'][username] = user_node 
         return True, ''
 
     def update_password(self, old_pw, new_pw1, new_pw2):
