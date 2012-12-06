@@ -131,7 +131,13 @@ def profile_post(username):
                 print >> avatar_file, avatar.file.read()
                 avatar_file.close()
             res, msg = user.update(username_new, avatar_new)
-            return template('profile_update', user=user, msg=msg)
+            if res:
+                response.set_cookie('username', username_new,
+                    secret=COOKIES_SECRET, path='/')
+                user_new = User.get(username_new)
+                return template('profile_update', user=user_new, msg=msg)
+            else:
+                return template('profile_update', user=user, msg=msg)
         elif action == 'password':
             old_pw = request.forms.get('old_pw')
             new_pw1 = request.forms.get('new_pw1')

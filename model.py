@@ -259,7 +259,7 @@ class User(object):
             tweet_node = relationship.start
             tweet = Tweet()
             tweet.text = tweet_node['text']
-            tweet.username = tweet_node['username']
+            tweet.username = tweet_node.SEND.outgoing.single.end['username']
             tweet.created_at = tweet_node['created_at']
             tweet.tid = tweet_node['tid']
             List.append(tweet)
@@ -278,8 +278,7 @@ class User(object):
         List = []
         last_tweet = tweet_ref['tot_tweet'] - 1
         for i in range(max(0,last_tweet-(index+amount)),max(0,last_tweet-index)):
-            tweet = Tweet()
-            tweet = tweet.get(i)
+            tweet = Tweet.get(i + 1)
             List.append(tweet)  
         return List
 
@@ -292,9 +291,9 @@ class Tweet(object):
     :type created_at: datetime
     """
     # NOTE(huxuan): Maybe no tid is needed?
-    def __init__(self, username='', text='', created_at='',tid=''):
+    def __init__(self, text='', created_at='',tid=''):
         """Init Tweet"""
-        self.username = username
+        self.username = None
         self.text = text
         self.created_at = created_at
         self.tid = tid
@@ -312,7 +311,7 @@ class Tweet(object):
         tweet_node = tweet_idx['tid'][tid].single
         if tweet_node:
             tweet.tweet_node = tweet_node
-            tweet.username = tweet_node['username']
+            tweet.username = tweet_node.SEND.outgoing.single.end['username']
             tweet.text = tweet_node['text']
             tweet.created_at = tweet_node['created_at']
             tweet.tid = tweet_node['tid']
@@ -332,7 +331,6 @@ class Tweet(object):
         if text:
             with db.transaction:
                 tweet_node = db.node();
-                tweet_node['username'] = username
                 tweet_node['text'] = text
                 tweet_node['created_at'] = created_at
                 user_node = user_idx['username'][username].single
