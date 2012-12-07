@@ -77,8 +77,6 @@ python /path/to/pyneo4jet.py [port_number]
 - [Official python embedded installation guide](http://docs.neo4j.org/chunked/stable/python-embedded-installation.html)
 - [Official Hello World python embedded examples](http://docs.neo4j.org/chunked/stable/tutorials-python-embedded.html)
 - [Official more detailed doc for python embedded](http://docs.neo4j.org/chunked/stable/python-embedded.html)
-- <del>[Official python-embedded application example](https://github.com/neo4j-examples/python-shop-categories)</del>
-  (Deprecated for haven't been updated for 3 years!)
 - [Bottle Tutorial](http://bottlepy.org/docs/stable/tutorial.html)
 - [SimpleTemplate Engine](http://bottlepy.org/docs/stable/stpl.html)
 
