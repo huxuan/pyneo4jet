@@ -4,7 +4,7 @@
 File: pyneo4jet.py
 Author: huxuan - i(at)huxuan.org
 Created: 2012-11-25
-Last modified: 2012-12-04
+Last modified: 2012-12-07
 Description:
     Main interface for pyneo4jet
 
@@ -177,10 +177,10 @@ def profile_post(username):
                     datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             )
             return template('tweet_update', user=user, tweet_msg=msg)
-        elif action == 'follow':
-            owner.follow(username)
-        elif action == 'unfollow':
-            owner.unfollow(username)
+    elif action == 'follow':
+        owner.follow(username)
+    elif action == 'unfollow':
+        owner.unfollow(username)
     redirect('/%s/' % username)
 
 @get('/<username>/timeline/')
