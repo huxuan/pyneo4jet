@@ -269,11 +269,10 @@ class User(object):
         user_node = user_idx['username'][self.username].single
         for follow_rel in user_node.FOLLOW.outgoing:
             follow_node = follow_rel.end
-            follow = User('')
-            follow.username = follow_node['username']
-            tweets_list.extend(follow.get_tweets(index,amount))
-        tweets_list.extend(self.get_tweets(index,amount))
-        sorted(tweets_list, key=lambda tweet: tweet.created_at, reverse=True)
+            follow = User(follow_node['username'])
+            tweets_list.extend(follow.get_tweets(index, amount))
+        tweets_list.extend(self.get_tweets(index, amount))
+        tweets_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
 
 class Tweet(object):
