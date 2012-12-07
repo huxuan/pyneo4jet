@@ -4,7 +4,7 @@
 File: pyneo4jet.py
 Author: huxuan - i(at)huxuan.org
 Created: 2012-11-25
-Last modified: 2012-12-04
+Last modified: 2012-12-07
 Description:
     Main interface for pyneo4jet
 
