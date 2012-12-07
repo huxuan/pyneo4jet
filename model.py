@@ -273,6 +273,7 @@ class User(object):
             follow.username = follow_node['username']
             tweets_list.extend(follow.get_tweets(index,amount))
         tweets_list.extend(self.get_tweets(index,amount))
+        sorted(tweets_list, key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
 
 class Tweet(object):
