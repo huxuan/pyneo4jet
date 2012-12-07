@@ -3,7 +3,7 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-12-05
+Last modified: 2012-12-07
 Description:
     models used in pyneo4jet
 
@@ -266,12 +266,14 @@ class User(object):
         :rtype: list of tweet instances shown in the timeline
         """
         tweets_list = []
-        last_tweet = tweet_ref['tot_tweet'] - 1
-        for i in range(max(0, last_tweet-(index+amount)),
-            max(0, last_tweet-index)):
-            tweet = Tweet.get(i + 1)
-            tweets_list.append(tweet)
-        return tweets_list
+        user_node = user_idx['username'][self.username].single
+        for follow_rel in user_node.FOLLOW.outgoing:
+            follow_node = follow_rel.end
+            follow = User('')
+            follow.username = follow_node['username']
+            tweets_list.extend(follow.get_tweets(index,amount))
+        tweets_list.extend(self.get_tweets(index,amount))
+        return tweets_list[index : min(index + amount, len(tweets_list))]
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
