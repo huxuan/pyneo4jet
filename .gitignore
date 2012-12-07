@@ -39,3 +39,4 @@ config.py
 *.swp
 database/
 images/*
+.bak
