@@ -281,6 +281,16 @@ def favicon():
     """
     return static_file('favicon.ico', root='images/')
 
+@get('/<avatar:re:avatar_.+>')
+def avatar_get(avatar):
+    """docstring for avatar_get"""
+    username = avatar[7:]
+    filename = 'images/%s' % username
+    if os.path.isfile(filename):
+        return static_file(username, root='images', mimetype='image/png')
+    else:
+        return static_file('default', root='images', mimetype='image/png')
+
 def main():
     """Parse the args and run the server"""
     if len(sys.argv) == 2 and sys.argv[1].isdigit():
