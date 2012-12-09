@@ -272,13 +272,11 @@ class User(object):
             follow = User(follow_node['username'])
             for send_rel in follow_node.SEND.incoming:
                 tweet_node = send_rel.start
-                tweet = Tweet()
-                tweet = tweet.get(tweet_node['tid'])
+                tweet = Tweet.get(tweet_node['tid'])
                 tweets_list.append(tweet)
         for rel in user_node.SEND.incoming:
             tweet_node = rel.start
-            tweet = Tweet()
-            tweet = tweet.get(tweet_node['tid'])
+            tweet = Tweet.get(tweet_node['tid'])
             tweets_list.append(tweet)
         tweets_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
