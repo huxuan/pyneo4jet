@@ -104,6 +104,7 @@ class User(object):
         Notes:
             Before update there needs a check!
         """
+        # NOTE(huxuan): There still exists bug here for deletion in index
         if not username:
             return False, 'The username should not be empty!'
         if not avatar:
@@ -289,7 +290,6 @@ class Tweet(object):
     :param created_at: the time created the tweet
     :type created_at: datetime
     """
-    # NOTE(huxuan): Maybe no tid is needed?
     def __init__(self, text='', created_at='', tid=0):
         """Init Tweet"""
         self.username = None
