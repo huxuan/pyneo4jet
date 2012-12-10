@@ -61,7 +61,10 @@ def main():
             user1 = User.get(username1)
             user2 = User.get(username2)
             if user1 and user2:
-                res, msg = user1.follow(username2)
+                if int(username1) + int(username2) % 2 == 0:
+                    res, msg = user2.follow(username1)
+                else:
+                    res, msg = user1.follow(username2)
                 if not res:
                     print msg
                     raw_input()
