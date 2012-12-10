@@ -160,7 +160,7 @@ class User(object):
         follow_user = user_idx['username'][username].single
         with db.transaction:
             user_node.FOLLOW(follow_user)
-        return True
+        return True, 'Follow user %s successfully!' % username
 
     def unfollow(self, username):
         """
