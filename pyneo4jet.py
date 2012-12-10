@@ -159,7 +159,7 @@ def profile_post(username):
                 hometown=request.forms.hometown,
             )
             if res:
-                return template('profile', user=user, owner=owner)
+                return redirect('/%s/' % username)
             else:
                 return template('profile_update', user=user, msg=msg)
         elif action == 'password':
@@ -167,7 +167,10 @@ def profile_post(username):
             new_pw1 = request.forms.get('new_pw1')
             new_pw2 = request.forms.get('new_pw2')
             res, msg = user.update_password(old_pw, new_pw1, new_pw2)
-            return template('password_update', user=user, msg=msg)
+            if res:
+                redirect('/%s/' % username)
+            else:
+                return template('password_update', user=user, msg=msg)
         elif action == 'tweet':
             res, msg = Tweet.add(
                 username = username,
