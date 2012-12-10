@@ -22,12 +22,13 @@ a mature and robust database [1]. For more information, refer to the
 In Ubuntu/Debian, they can be easily intalled by command
 
 ```shell
-sudo apt-get install python-dev libevent-dev
+sudo apt-get install python-dev libevent-dev python-jpype
 ```
 
 ### python third part modules
 - bottle
 - gevent
+- neo4j-embedded
 
 You can easily install all requirements via pip by command
 
