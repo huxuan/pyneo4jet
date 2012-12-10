@@ -20,13 +20,12 @@ from config import INVITATION_CODE
 INFO_PATTERN = re.compile('"([^"]+)"')
 
 KEYS = (
-    'id', 'username', 'joined', 'species', 'coloring', 'gender', 'birthday',
+    'username', 'name', 'joined', 'species', 'coloring', 'gender', 'birthday',
     'age', 'hometown', 'favorite_toy', 'favorite_activity', 'favorite_food',
 )
 
 def main():
     """docstring for main"""
-    username_list = {}
 
     data = file('data/petster-hamster/ent.petster-hamster')
     for item in data.readlines():
@@ -37,14 +36,17 @@ def main():
         if not item.startswith('%'):
             res = INFO_PATTERN.findall(item)
             info = dict(zip(KEYS, res))
-            print info['id']
-            username_list[info['id']] = info['username']
-            User.add(
+            print info['username']
+            res, msg = User.add(
                 username=info['username'],
                 password='pyneo4jet%s' % info['username'],
                 password_confirm='pyneo4jet%s' % info['username'],
                 invitation=INVITATION_CODE,
             )
+            if not res:
+                print msg
+                print info
+                raw_input()
             user = User.get(info['username'])
             user.update()
     data.close()
@@ -54,16 +56,18 @@ def main():
         # print repr(item)
         # raw_input()
         if not item.startswith('%'):
-            uid1, uid2 = item.strip().split(' ')
-            print repr(uid1), repr(uid2)
+            username1, username2 = item.strip().split(' ')
+            print username1, username2
             # raw_input()
-            username1 = username_list.get(uid1)
-            username2 = username_list.get(uid2)
-            if username1 and username2:
-                user1 = User.get(username1)
-                user2 = User.get(username2)
-                user1.follow(username2)
-                user2.follow(username1)
+            user1 = User.get(username1)
+            user2 = User.get(username2)
+            if user1 and user2:
+                res, msg = user1.follow(username2)
+                if not res:
+                    print msg
+                res, msg = user2.follow(username1)
+                if not res:
+                    print msg
     data.close()
 
     db.shutdown()
