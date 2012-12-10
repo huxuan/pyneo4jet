@@ -243,8 +243,8 @@ class User(object):
 
         :param index: the begin index of tweets to be shown, default to 1
         :type index: int
-        :param index: the amount of tweets to be shown, default to 10
-        :type index: int
+        :param amount: the amount of tweets to be shown, default to 10
+        :type amount: int
         :rtype: list of tweet instances shown in the timeline
         """
         tweets_list = []
@@ -262,10 +262,13 @@ class User(object):
         tweets_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
 
-    def get_random_tweets(self):
+    def get_random_tweets(self, amount=10):
         """
         get random tweets
+        Random tweets should not from users has already been followed
 
+        :param amount: the amount of tweets to be shown, default to 10
+        :type amount: int
         :rtype: lits of tweet instances shown in random tweets page
         """
         pass
