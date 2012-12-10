@@ -88,7 +88,7 @@ class User(object):
             return False, 'Invalid password!'
         return True, ''
 
-    def update(self, username):
+    def update(self):
         """
         Update a user's profile with username
 
@@ -99,18 +99,12 @@ class User(object):
         Notes:
             Before update there needs a check!
         """
-        # NOTE(huxuan): There still exists bug here for deletion in index
-        if not username:
-            return False, 'The username should not be empty!'
         user_node = user_idx['username'][self.username].single
         if not user_node:
             return False, 'User does not exist!'
         with db.transaction:
-            user_idx['username'][self.username].single.delete()
-            self.username = username
-            user_node['username'] = username
-            user_idx['username'][username] = user_node
-        return True, ''
+            pass
+        return True, 'Profile update successfully!'
 
     def update_password(self, old_pw, new_pw1, new_pw2):
         """

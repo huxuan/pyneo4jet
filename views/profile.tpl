@@ -12,11 +12,13 @@
     <input type="submit" value='follow'/>
 </form>
 % end
-% for tweet in tweets:
-<div>
-    <div>{{tweet.username}}</div>
-    <div>{{tweet.text}}</div>
-    <div>{{tweet.created_at}}</div>
-</div>
+% if defined('tweets'):
+    % for tweet in tweets:
+    <div>
+        <div>{{tweet.username}}</div>
+        <div>{{tweet.text}}</div>
+        <div>{{tweet.created_at}}</div>
+    </div>
+    % end
 % end
 % rebase base title=user.username, username=user.username

@@ -147,18 +147,15 @@ def profile_post(username):
     if ownername == username:
         if action == 'profile':
             avatar = request.files.avatar
-            username_new = request.forms.username or username
             if avatar and avatar.file:
-                avatar_new = 'images/avatar_%s' % username
+                avatar_new = 'images/%s' % username
+                print avatar_new
                 avatar_file = file(avatar_new, 'w')
                 print >> avatar_file, avatar.file.read()
                 avatar_file.close()
-            res, msg = user.update(username_new)
+            res, msg = user.update()
             if res:
-                response.set_cookie('username', username_new,
-                    secret=COOKIES_SECRET, path='/')
-                user_new = User.get(username_new)
-                return template('profile_update', user=user_new, msg=msg)
+                return template('profile', user=user, owner=owner)
             else:
                 return template('profile_update', user=user, msg=msg)
         elif action == 'password':
