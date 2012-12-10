@@ -3,7 +3,7 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-12-07
+Last modified: 2012-12-10
 Description:
     models used in pyneo4jet
 
@@ -199,9 +199,7 @@ class User(object):
         users_list = []
         for relationship in user_from.FOLLOW.incoming:
             user_to = relationship.start
-            user = User('','')
-            user.username = user_to['username']
-            user.password = user_to['password']
+            user = User(user_to['username'])
             users_list.append(user)
         return users_list[index : min(index+amount, len(users_list))]
 
@@ -219,9 +217,7 @@ class User(object):
         users_list = []
         for relationship in user_from.FOLLOW.outgoing:
             user_to = relationship.end
-            user = User('','')
-            user.username = user_to['username']
-            user.password = user_to['password']
+            user = User(user_to['username'])
             users_list.append(user)
         return users_list[index : min(index+amount, len(users_list))]
 
