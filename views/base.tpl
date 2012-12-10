@@ -5,9 +5,6 @@
 </head>
 <body>
     %include nav username=get('username')
-    <hr />
-    <hr />
-    <hr />
     %include tweet_form username=get('username')
     %include
 </body>
