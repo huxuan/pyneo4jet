@@ -65,9 +65,11 @@ def main():
                 res, msg = user1.follow(username2)
                 if not res:
                     print msg
+                    raw_input()
                 res, msg = user2.follow(username1)
                 if not res:
                     print msg
+                    raw_input()
     data.close()
 
     db.shutdown()
