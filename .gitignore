@@ -39,4 +39,6 @@ config.py
 *.swp
 database/
 images/*
-.bak
+!images/default
+!images/favicon.ico
+*.bak
