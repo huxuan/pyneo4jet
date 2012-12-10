@@ -37,18 +37,17 @@ def main():
             res = INFO_PATTERN.findall(item)
             info = dict(zip(KEYS, res))
             print info['username']
-            res, msg = User.add(
+            res, user = User.add(
                 username=info['username'],
                 password='pyneo4jet%s' % info['username'],
                 password_confirm='pyneo4jet%s' % info['username'],
                 invitation=INVITATION_CODE,
             )
-            if not res:
-                print msg
-                print info
-                raw_input()
-            user = User.get(info['username'])
-            user.update()
+            user.update(
+                name=info['name'],
+                gender=info['gender'],
+                hometown=info['hometown'],
+            )
     data.close()
 
     data = file('data/petster-hamster/out.petster-hamster')

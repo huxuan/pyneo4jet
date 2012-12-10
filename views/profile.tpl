@@ -1,5 +1,8 @@
 <div>{{user.username}}</div>
 <div><img src="/avatar_{{user.username}}" /></div>
+<div>Name: {{user.name}}</div>
+<div>Gender: {{user.gender}}</div>
+<div>Hometown: {{user.hometown}}</div>
 % if user.username == owner.username:
 <a href="/{{user.username}}/?action=profile">Update Profile</a>
 <a href="/{{user.username}}/?action=password">Update Password</a>

@@ -153,7 +153,11 @@ def profile_post(username):
                 avatar_file = file(avatar_new, 'w')
                 print >> avatar_file, avatar.file.read()
                 avatar_file.close()
-            res, msg = user.update()
+            res, msg = user.update(
+                name=request.forms.name,
+                gender=request.forms.gender,
+                hometown=request.forms.hometown,
+            )
             if res:
                 return template('profile', user=user, owner=owner)
             else:

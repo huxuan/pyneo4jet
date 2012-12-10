@@ -23,6 +23,8 @@ class User(object):
 
     :param username: the username of the user
     :type username: string
+    :param password: the password of the user
+    :type password: string
     """
     def __init__(self, username, password=None):
         """Init User"""
@@ -30,7 +32,8 @@ class User(object):
         self.password = password
 
     @staticmethod
-    def add(username, password, password_confirm, invitation):
+    def add(username, password, password_confirm, invitation,
+        gender="", hometown=""):
         """
         Add a user to neo4j database
 
@@ -48,13 +51,16 @@ class User(object):
         user_node = user_idx['username'][username].single
         if user_node:
             return False, 'The username %s has been used!' % username
-        user = User(username, password)
         with db.transaction:
             user_node = db.node()
-            user_node['username'] = user.username
-            user_node['password'] = user.password
+            user_node['name'] = username
+            user_node['username'] = username
+            user_node['password'] = password
+            user_node['gender'] = gender
+            user_node['hometown'] = hometown
             user_idx['username'][username] = user_node
-        return True, ''
+        user = User.get(username)
+        return True, user
 
     @staticmethod
     def get(username):
@@ -69,6 +75,9 @@ class User(object):
         user_node = user_idx['username'][username].single
         if user_node:
             user = User(username, user_node['password'])
+            user.name = user_node['name']
+            user.gender = user_node['gender']
+            user.hometown = user_node['hometown']
         return user
 
     @staticmethod
@@ -89,7 +98,7 @@ class User(object):
             return False, 'Invalid password!'
         return True, ''
 
-    def update(self):
+    def update(self, name, gender, hometown):
         """
         Update a user's profile with username
 
@@ -104,7 +113,9 @@ class User(object):
         if not user_node:
             return False, 'User does not exist!'
         with db.transaction:
-            pass
+            user_node['name'] = name
+            user_node['gender'] = gender
+            user_node['hometown'] = hometown
         return True, 'Profile update successfully!'
 
     def update_password(self, old_pw, new_pw1, new_pw2):
@@ -194,7 +205,7 @@ class User(object):
         users_list = []
         for relationship in user_from.FOLLOW.incoming:
             user_to = relationship.start
-            user = User(user_to['username'])
+            user = User.get(user_to['username'])
             users_list.append(user)
         return users_list[index : min(index+amount, len(users_list))]
 
@@ -212,7 +223,7 @@ class User(object):
         users_list = []
         for relationship in user_from.FOLLOW.outgoing:
             user_to = relationship.end
-            user = User(user_to['username'])
+            user = User.get(user_to['username'])
             users_list.append(user)
         return users_list[index : min(index+amount, len(users_list))]
 
