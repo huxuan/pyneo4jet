@@ -18,7 +18,7 @@ import datetime
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, response, error
+from bottle import run, get, post, request, response, error,route
 from bottle import template, redirect, static_file
 
 try:
@@ -29,6 +29,14 @@ except ImportError:
 
 from model import User, Tweet
 from database import GRAPHDB as db
+
+
+dirname=os.getcwd()
+@route('/static/:filename')
+def sendingstaticfile(filename):
+    return static_file(filename,root=dirname+'/static')
+
+
 
 def login_required(func):
     """
@@ -267,24 +275,6 @@ def following(username, index=0):
         title='%s\'s following' % username,
         username=username,
         users=users,
-    )
-
-@get('/<username>/random/')
-@login_required
-def user_random(username):
-    """
-    Show random tweets for a user
-
-    :param username: username of the user
-    :type username: string
-    :rtype: random tweets page shown
-    """
-    user = User.get(username)
-    tweets = user.get_random_tweets()
-    return template('tweets',
-        title='%s\'s Random Tweets' % username,
-        username=username,
-        tweets=tweets,
     )
 
 @get('/images/<filename:path>')

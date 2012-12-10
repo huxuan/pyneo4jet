@@ -1,9 +1,14 @@
 <html>
+<link rel="stylesheet" href="/static/index.css" />
 <head>
     <title>{{get('title', '') and '%s | ' % title }}pyneo4jet</title>
 </head>
 <body>
     %include nav username=get('username')
+    <hr />
+    <hr />
+    <hr />
+				  
     %include tweet_form username=get('username')
     %include
 </body>
