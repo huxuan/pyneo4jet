@@ -13,7 +13,7 @@
         % end
     </select>
     <br />
-    Hometown: <input type="text" name="hometown"/>
+    Hometown: <input type="text" name="hometown" value="{{user.hometown}}"/>
     <br />
     avatar: <input type="file" name="avatar"/>
     <br />
