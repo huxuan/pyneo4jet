@@ -251,7 +251,6 @@ class User(object):
         user_node = user_idx['username'][self.username].single
         for follow_rel in user_node.FOLLOW.outgoing:
             follow_node = follow_rel.end
-            follow = User(follow_node['username'])
             for send_rel in follow_node.SEND.incoming:
                 tweet_node = send_rel.start
                 tweet = Tweet.get(tweet_node['tid'])
