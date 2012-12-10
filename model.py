@@ -328,12 +328,14 @@ class Tweet(object):
         Note:
             Before add there needs a check!
         """
+        user_node = user_idx['username'][username].single
+        if not user_node:
+            return False, 'User not found!'
         if text:
             with db.transaction:
                 tweet_node = db.node()
                 tweet_node['text'] = text
                 tweet_node['created_at'] = created_at
-                user_node = user_idx['username'][username].single
                 tweet_node.SEND(user_node)
                 tid = tweet_ref['tot_tweet']
                 tweet_node['tid'] = tid
