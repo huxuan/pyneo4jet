@@ -24,10 +24,9 @@ class User(object):
     :param username: the username of the user
     :type username: string
     """
-    def __init__(self, username, password=None, avatar='/images/default.png'):
+    def __init__(self, username, password=None):
         """Init User"""
         self.username = username
-        self.avatar = avatar
         self.password = password
 
     @staticmethod
@@ -54,7 +53,6 @@ class User(object):
             user_node = db.node()
             user_node['username'] = user.username
             user_node['password'] = user.password
-            user_node['avatar'] = user.avatar
             user_idx['username'][username] = user_node
         return True, ''
 
@@ -70,7 +68,6 @@ class User(object):
         user = User(username)
         user_node = user_idx['username'][username].single
         user.password = user_node['password']
-        user.avatar = user_node['avatar']
         return user
 
     @staticmethod
@@ -91,14 +88,12 @@ class User(object):
             return False, 'Invalid password!'
         return True, ''
 
-    def update(self, username, avatar):
+    def update(self, username):
         """
         Update a user's profile with username
 
         :param username: the username of the user
         :type username: string
-        :param avatar: the path of the user's avatar
-        :type avatar: string
         :rtype: true or false indicated the result of update action
 
         Notes:
@@ -107,17 +102,13 @@ class User(object):
         # NOTE(huxuan): There still exists bug here for deletion in index
         if not username:
             return False, 'The username should not be empty!'
-        if not avatar:
-            return False, 'The avatar should not be empty!'
         user_node = user_idx['username'][self.username].single
         if not user_node:
             return False, 'User does not exist!'
         with db.transaction:
             user_idx['username'][self.username].single.delete()
             self.username = username
-            self.avatar = avatar
             user_node['username'] = username
-            user_node['avatar'] = avatar
             user_idx['username'][username] = user_node
         return True, ''
 
