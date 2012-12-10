@@ -13,5 +13,5 @@ pylint:
 	find . -name "*.py" | xargs pylint
 
 # Data Parser
-data-parser:
+data-parser: depclean
 	python -m data.parser
