@@ -5,6 +5,7 @@
     <a href="/{{username}}/tweets/">Tweets</a>|
     <a href="/{{username}}/followers/">Followers</a>|
     <a href="/{{username}}/following/">Following</a>|
+    <a href="/{{username}}/random/">Random</a>|
     <a href="/?action=signout">Sign Out</a>|
     % else:
     <a href="/?action=signup">Sign Up</a>|
