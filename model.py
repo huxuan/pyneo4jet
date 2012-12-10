@@ -263,6 +263,14 @@ class User(object):
         tweets_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
 
+    def get_random_tweets(self):
+        """
+        get random tweets
+
+        :rtype: lits of tweet instances shown in random tweets page
+        """
+        pass
+
 class Tweet(object):
     """Wrap of all actions related to Tweet
 
