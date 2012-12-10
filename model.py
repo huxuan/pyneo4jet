@@ -65,9 +65,10 @@ class User(object):
         :type username: string
         :rtype: instance of user
         """
-        user = User(username)
+        user = None
         user_node = user_idx['username'][username].single
-        user.password = user_node['password']
+        if user_node:
+            user = User(username, user_node['password'])
         return user
 
     @staticmethod
