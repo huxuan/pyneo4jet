@@ -1,4 +1,5 @@
-
+% if defined('user') and user.name:
+<div>Avatar: <a href="/{{user.username}}/"><img src="/avatar_{{user.username}}" width="35" height="30"/></a></div>
 % if defined('user') and user.name:
 <div>Name: {{user.name}}</div>
 % end
