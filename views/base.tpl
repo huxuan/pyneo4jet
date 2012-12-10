@@ -8,7 +8,6 @@
     <hr />
     <hr />
     <hr />
-				  
     %include tweet_form username=get('username')
     %include
 </body>
