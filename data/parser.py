@@ -13,8 +13,9 @@ License GPLv3
 """
 
 import re
+import datetime
 
-from model import User, db
+from model import User, Tweet, db
 from config import INVITATION_CODE
 
 INFO_PATTERN = re.compile('"([^"]+)"')
@@ -48,6 +49,16 @@ def main():
                 gender=info['gender'],
                 hometown=info['hometown'],
             )
+            for key in KEYS:
+                res, msg = Tweet.add(info['username'],
+                    'My %s is %s' % (key, info[key]),
+                    datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                )
+                if not res:
+                    print msg
+                    print key
+                    print info[key]
+                    raw_input()
     data.close()
 
     data = file('data/petster-hamster/out.petster-hamster')
