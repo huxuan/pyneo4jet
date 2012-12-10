@@ -283,7 +283,7 @@ class User(object):
         :type amount: int
         :rtype: lits of tweet instances shown in random tweets page
         """
-        pass
+        return {}
 
 class Tweet(object):
     """Wrap of all actions related to Tweet

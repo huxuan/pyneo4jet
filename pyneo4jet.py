@@ -280,7 +280,7 @@ def user_random(username):
     :rtype: random tweets page shown
     """
     user = User.get(username)
-    tweets = user.get_random_tweets(index)
+    tweets = user.get_random_tweets()
     return template('tweets',
         title='%s\'s Random Tweets' % username,
         username=username,
