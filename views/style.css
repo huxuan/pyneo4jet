@@ -45,16 +45,16 @@
     margin-left: 65px;
 }
 
-.tweet .avatar a img{
+.tweet .avatar a img, .user .avatar a img{
     width: 48px;
     height: 48px;
 }
 
-.tweet-side{
+.tweet-side, .user-side{
     margin-left: 55px;
 }
 
-.tweet .name{
+.tweet .name, .user .name{
     font-weight: bold;
     color: #535F74;
 }
