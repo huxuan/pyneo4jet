@@ -1,1 +1,11 @@
-.nav{background-color:#0CF}
+.nav{
+    background: #80C5E8;
+}
+
+.nav a {
+    color: white;
+}
+
+.nav .pipe{
+    color: white;
+}
