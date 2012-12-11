@@ -3,13 +3,14 @@ File: user.py
 Author: huxuan - i(at)huxuan.org
         Meryl - panwanqiong(at)pku.edu.cn
 Created: 2012-11-25
-Last modified: 2012-12-10
+Last modified: 2012-12-11
 Description:
     models used in pyneo4jet
 
 Copyrgiht (c) 2012 by huxuan. All rights reserved.
 License GPLv3
 """
+import random
 
 from config import INVITATION_CODE
 
@@ -283,7 +284,20 @@ class User(object):
         :type amount: int
         :rtype: lits of tweet instances shown in random tweets page
         """
-        return {}
+        tot = tweet_ref['tot_tweet']
+        List = []
+        for i in range(0,tot-1):
+            tweet = Tweet()
+            tweet = tweet.get(i)
+            if tweet.username != self.username:
+                List.append(tweet)
+        cnt = 0 
+        random_list = []
+        while(cnt<amount):
+            i = random.randrange(0,len(List)-1)
+            random_list.append(List[i])
+            cnt = cnt + 1
+        return random_list
 
 class Tweet(object):
     """Wrap of all actions related to Tweet
