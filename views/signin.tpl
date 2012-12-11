@@ -1,3 +1,21 @@
+<p class="title">Welcome to pyneo4jet!</p>
+<div class="content">
+    <form action="/" method="POST">
+        <div>
+            Username:
+            <br />
+            <input type="text" name="username" value="{{get('username', '')}}"/>
+        </div>
+        <div>
+            Password:
+            <br />
+            <input type="text" name="username" value="{{get('username', '')}}"/>
+        </div>
+        <div>
+            <input type="submit" class="button" name="signin" value="Sign In"/>
+        </div>
+    </form>
+</div>
 <table width="240" height="139"  border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
         <td height="139" align="center">

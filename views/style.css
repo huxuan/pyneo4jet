@@ -1,5 +1,5 @@
 .nav{
-    background: #80C5E8;
+    background: #2B9FD9;
 }
 
 .nav a {
@@ -8,4 +8,21 @@
 
 .nav .pipe{
     color: white;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.button{
+    border: 1px solid #2B9FD9;
+    background: #09C;
+    color: white;
+    font-weight: bold;
+    padding: 2px 6px;
+}
+
+div, p, form{
+    margin: 0;
+    padding: 0;
 }
