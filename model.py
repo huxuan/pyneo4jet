@@ -285,18 +285,15 @@ class User(object):
         :rtype: lits of tweet instances shown in random tweets page
         """
         tot = tweet_ref['tot_tweet']
-        List = []
-        for i in range(0,tot-1):
+        cnt = 0 
+        random_list = []
+        while(cnt < amount):
+            i = random.randrange(0,tot-1)
             tweet = Tweet()
             tweet = tweet.get(i)
             if tweet.username != self.username:
-                List.append(tweet)
-        cnt = 0 
-        random_list = []
-        while(cnt<amount):
-            i = random.randrange(0,len(List)-1)
-            random_list.append(List[i])
-            cnt = cnt + 1
+                random_list.append(tweet)
+                cnt = cnt + 1
         return random_list
 
 class Tweet(object):
