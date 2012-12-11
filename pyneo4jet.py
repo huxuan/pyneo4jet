@@ -272,6 +272,24 @@ def following(username, index=0):
         users=users,
     )
 
+@get('/<username>/random/')
+@login_required
+def user_random(username):
+    """
+    Show random tweets for a user
+
+    :param username: username of the user
+    :type username: string
+    :rtype: random tweets page shown
+    """
+    user = User.get(username)
+    tweets = user.get_random_tweets()
+    return template('tweets',
+        title='%s\'s Random Tweets' % username,
+        username=username,
+        tweets=tweets,
+    )
+
 @get('/images/<filename:path>')
 def images(filename):
     """

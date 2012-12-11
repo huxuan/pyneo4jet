@@ -278,22 +278,26 @@ class User(object):
     def get_random_tweets(self, amount=10):
         """
         get random tweets
-        Random tweets should not from users has already been followed
+        Random tweets should not from users himself/herself
 
         :param amount: the amount of tweets to be shown, default to 10
         :type amount: int
         :rtype: lits of tweet instances shown in random tweets page
         """
         tot = tweet_ref['tot_tweet']
-        cnt = 0 
         random_list = []
-        while(cnt < amount):
-            i = random.randrange(0,tot-1)
-            tweet = Tweet()
-            tweet = tweet.get(i)
-            if tweet.username != self.username:
+        tids = set([])
+        count = 0
+        while(len(random_list) < amount):
+            count += 1
+            tid = random.randrange(0, tot)
+            tweet = Tweet.get(tid)
+            print tid, tweet.username
+            if tweet.username != self.username and tid not in tids:
                 random_list.append(tweet)
-                cnt = cnt + 1
+                tids.add(tid)
+            if count > 10 * amount:
+                break
         return random_list
 
 class Tweet(object):
