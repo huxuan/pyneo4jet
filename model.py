@@ -31,10 +31,12 @@ class User(object):
         """Init User"""
         self.username = username
         self.password = password
+        self.gender = ''
+        self.name = ''
+        self.hometown = ''
 
     @staticmethod
-    def add(username, password, password_confirm, invitation,
-        gender="", hometown=""):
+    def add(username, password, password_confirm, invitation):
         """
         Add a user to neo4j database
 
@@ -57,8 +59,8 @@ class User(object):
             user_node['name'] = username
             user_node['username'] = username
             user_node['password'] = password
-            user_node['gender'] = gender
-            user_node['hometown'] = hometown
+            user_node['gender'] = ''
+            user_node['hometown'] = ''
             user_idx['username'][username] = user_node
         user = User.get(username)
         return True, user

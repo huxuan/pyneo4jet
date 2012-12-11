@@ -18,7 +18,7 @@ import datetime
 
 import gevent.monkey
 gevent.monkey.patch_all()
-from bottle import run, get, post, request, response, error,route
+from bottle import run, get, post, request, response, error
 from bottle import template, redirect, static_file
 
 try:
@@ -158,19 +158,11 @@ def profile_post(username):
                 gender=request.forms.gender,
                 hometown=request.forms.hometown,
             )
-            if res:
-                return redirect('/%s/' % username)
-            else:
-                return template('profile_update', user=user, msg=msg)
         elif action == 'password':
             old_pw = request.forms.get('old_pw')
             new_pw1 = request.forms.get('new_pw1')
             new_pw2 = request.forms.get('new_pw2')
             res, msg = user.update_password(old_pw, new_pw1, new_pw2)
-            if res:
-                redirect('/%s/' % username)
-            else:
-                return template('password_update', user=user, msg=msg)
         elif action == 'tweet':
             res, msg = Tweet.add(
                 username = username,
@@ -178,10 +170,10 @@ def profile_post(username):
                 created_at =
                     datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             )
-            if res:
-                redirect('/')
-            else:
-                return template('tweet_update', user=user, tweet_msg=msg)
+        if res:
+            redirect('/%s/' % username)
+        else:
+            return template('%s_update' % action, user=user, msg=msg)
     elif action == 'follow':
         owner.follow(username)
     elif action == 'unfollow':
@@ -306,7 +298,9 @@ def favicon():
 
 @get('/<avatar:re:avatar_.+>')
 def avatar_get(avatar):
-    """docstring for avatar_get"""
+    """
+    Get avatar file
+    """
     username = avatar[7:]
     filename = 'images/%s' % username
     if os.path.isfile(filename):
@@ -316,7 +310,14 @@ def avatar_get(avatar):
 
 @get('/<css:re:.+\.css>')
 def css_get(css):
-    return static_file(css, root='views')
+    """
+    Get css file
+    """
+    filename = 'views/%s' % css
+    if os.path.isfile(filename):
+        return static_file(css, root='views')
+    else:
+        return static_file('style.css', root='views')
 
 def main():
     """Parse the args and run the server"""
