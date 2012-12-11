@@ -30,14 +30,6 @@ except ImportError:
 from model import User, Tweet
 from database import GRAPHDB as db
 
-
-dirname=os.getcwd()
-@route('/static/:filename')
-def sendingstaticfile(filename):
-    return static_file(filename,root=dirname+'/static')
-
-
-
 def login_required(func):
     """
     Decorator for login check
@@ -300,6 +292,10 @@ def avatar_get(avatar):
         return static_file(username, root='images', mimetype='image/png')
     else:
         return static_file('default', root='images', mimetype='image/png')
+
+@get('/<css:re:.+\.css>')
+def css_get(css):
+    return static_file(css, root='views')
 
 def main():
     """Parse the args and run the server"""
