@@ -178,7 +178,10 @@ def profile_post(username):
                 created_at =
                     datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             )
-            return template('tweet_update', user=user, tweet_msg=msg)
+            if res:
+                redirect('/')
+            else:
+                return template('tweet_update', user=user, tweet_msg=msg)
     elif action == 'follow':
         owner.follow(username)
     elif action == 'unfollow':
