@@ -34,3 +34,12 @@ body, div, p, form{
     margin: 0;
     padding: 0;
 }
+
+textarea.text{
+    width: 100%;
+    border: 1px solid #2EA8E5;
+}
+
+textarea.text.focus{
+    border: 1px solid #2483B3;
+}
