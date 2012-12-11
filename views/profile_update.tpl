@@ -31,7 +31,7 @@
     <div>
         Avatar:
         <br />
-        <input type="file" style="width:150px;height:22px" name="avatar"/>
+        <input type="file" name="avatar"/>
     </div>
     <div>
         <input type="submit" class="button" name="update" value="Update"/>
