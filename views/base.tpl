@@ -1,5 +1,5 @@
 <html>
-<link rel="stylesheet" href="/static/index.css" />
+<link rel="stylesheet" href="/static/style.css" />
 <head>
     <title>{{get('title', '') and '%s | ' % title }}pyneo4jet</title>
 </head>
