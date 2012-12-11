@@ -1,33 +1,41 @@
-% if defined('user'):
-    <div>Avatar:
-        <a href="/{{user.username}}/">
-            <img src="/avatar_{{user.username}}" width="35" height="30"/>
-        </a>
+<div class="content">
+    <div class="profile">
+        % if defined('user'):
+        <div class="avatar">
+            <a href="/{{user.username}}/">
+                <img src="/avatar_{{user.username}}"/>
+            </a>
+        </div>
+        <div class="profile-side">
+            <div class="name">{{user.name}}</div>
+            % if user.gender:
+            <div class="gender">{{user.gender}}</div>
+            % end
+            % if user.hometown:
+            <div class="hometown">{{user.hometown}}</div>
+            % end
+        </div>
+        % end
+
+        <div class="action">
+            % if user.username == owner.username:
+            [
+            <a href="/{{user.username}}/?action=profile">Update Profile</a>
+            |
+            <a href="/{{user.username}}/?action=password">Update Password</a>
+            ]
+            % elif isfollow:
+            <form action="/{{user.username}}/?action=unfollow" method="POST">
+                <input class="button" type="submit" value='unfollow'/>
+            </form>
+            % else:
+            <form action="/{{user.username}}/?action=follow" method="POST">
+                <input class="button" type="submit" value='follow'/>
+            </form>
+            % end
+        </div>
     </div>
-    <div>Name: {{user.name}}</div>
-    <div>Gender: {{user.gender}}</div>
-    <div>Hometown: {{user.hometown}}</div>
-% end
-% if user.username == owner.username:
-<a href="/{{user.username}}/?action=profile">Update Profile</a>
-<a href="/{{user.username}}/?action=password">Update Password</a>
-% elif isfollow:
-<form action="/{{user.username}}/?action=unfollow" method="POST">
-    <input type="submit" value='unfollow'/>
-</form>
-% else:
-<form action="/{{user.username}}/?action=follow" method="POST">
-    <input type="submit" value='follow'/>
-</form>
-% end
-% for tweet in tweets:
-<div>
-    <a href="/{{tweet.username}}/">
-        <img src="/avatar_{{tweet.username}}" width="35" height="30"/>
-        <strong>{{tweet.username}}: </strong>
-    </a>
-    <div><strong>{{tweet.text}}</strong></div>
-    <div>{{tweet.created_at}}</div>
+
+    % include tweets_list tweets=tweets
 </div>
-% end
 % rebase base title=user.username, username=user.username
