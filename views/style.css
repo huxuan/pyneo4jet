@@ -1,9 +1,11 @@
-.nav{
+.nav, .nav a{
+    color: white;
     background: #2B9FD9;
 }
 
-.nav a, .nav .pipe{
+.profile .update, .profile .update a{
     color: white;
+    background: #80C5E8;
 }
 
 .nav, .content, .title{
@@ -36,13 +38,13 @@
     height: 60px;
 }
 
-.profile .update, .profile .update a{
-    color: white;
-    background: #2B9FD9;
-}
-
 .profile-side{
     margin-left: 65px;
+    min-height: 60px;
+}
+
+.tweet, .user{
+    border: 1px solid #F2F2F2;
 }
 
 .tweet .avatar a img, .user .avatar a img{
@@ -52,6 +54,7 @@
 
 .tweet-side, .user-side{
     margin-left: 55px;
+    min-height: 48px;
 }
 
 .tweet .name, .user .name{
@@ -69,8 +72,9 @@
 }
 
 .odd{
-    background: #80C5E8;
+    background: #F2F2F2;
 }
+
 body, div, p, form{
     margin: 0;
     padding: 0;
