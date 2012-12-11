@@ -19,11 +19,13 @@
 
         <div class="action">
             % if user.username == owner.username:
-            [
-            <a href="/{{user.username}}/?action=profile">Update Profile</a>
-            |
-            <a href="/{{user.username}}/?action=password">Update Password</a>
-            ]
+            <div class="update">
+                [
+                <a href="/{{user.username}}/?action=profile">Update Profile</a>
+                |
+                <a href="/{{user.username}}/?action=password">Update Password</a>
+                ]
+            </div>
             % elif isfollow:
             <form action="/{{user.username}}/?action=unfollow" method="POST">
                 <input class="button" type="submit" value='unfollow'/>

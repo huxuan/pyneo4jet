@@ -36,7 +36,7 @@
     height: 60px;
 }
 
-.profile .action, .profile .action a{
+.profile .update, .profile .update a{
     color: white;
     background: #2B9FD9;
 }
