@@ -149,7 +149,6 @@ def profile_post(username):
             avatar = request.files.avatar
             if avatar and avatar.file:
                 avatar_new = 'images/%s' % username
-                print avatar_new
                 avatar_file = file(avatar_new, 'w')
                 print >> avatar_file, avatar.file.read()
                 avatar_file.close()

@@ -294,7 +294,6 @@ class User(object):
             count += 1
             tid = random.randrange(0, tot)
             tweet = Tweet.get(tid)
-            print tid, tweet.username
             if tweet.username != self.username and tid not in tids:
                 random_list.append(tweet)
                 tids.add(tid)
