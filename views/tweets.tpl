@@ -8,4 +8,4 @@
     <div>{{tweet.created_at}}</div>
 </div>
 % end
-% rebase base title=title, username=username
+% rebase base title=title, username=username, tweet_form=True

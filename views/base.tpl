@@ -4,8 +4,11 @@
     <title>{{get('title', '') and '%s | ' % title }}pyneo4jet</title>
 </head>
 <body>
-    %include nav username=get('username')
-    %include tweet_form username=get('username')
-    %include
+    % include nav username=get('username')
+    % setdefault('tweet_form', False)
+    % if tweet_form:
+        % include tweet_form username=get('username')
+    % end
+    % include
 </body>
 </html>
