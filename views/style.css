@@ -2,6 +2,26 @@
     color: white;
     background: #2B9FD9;
 }
+.home {
+margin-left: 220px;
+}
+
+.content_base {
+background: #DFE5F1;
+}
+.conL {
+margin-left: 215px;
+background: white;
+float: left;
+width: 595px;
+padding-bottom: 20px;
+min-height: 1000px;
+_height: 1000px;
+}
+.conL-inner {
+margin: 0 auto;
+}
+
 
 .profile .update, .profile .update a{
     color: white;
@@ -33,6 +53,11 @@
     position: absolute;
 }
 
+.profile, .profile_update, .password_update, .users{
+padding: 0 30px;
+}
+
+
 .profile .avatar a img{
     width: 60px;
     height: 60px;
@@ -42,6 +67,7 @@
     margin-left: 65px;
     min-height: 60px;
 }
+
 
 .tweet, .user{
     border: 1px solid #F2F2F2;
@@ -85,6 +111,96 @@ textarea.text{
     border: 1px solid #2EA8E5;
 }
 
+
 textarea.text.focus{
     border: 1px solid #2483B3;
+}
+
+.recommendTopic {
+padding: 30px 30px 8px;
+}
+.recommendTopic-topic {
+float: right;
+height: 24px;
+text-align: right;
+overflow: hidden;
+}
+.statusUpdate {
+padding: 0 30px;
+}
+
+.statusUpdate .disabled
+.publishBox-bd {
+background: #F8F8F8;
+border: 1px solid #EBEBEB;
+}
+.statusUpdate .disabled
+.publishBox-textareaBox {
+background: #F8F8F8;
+}
+.statusUpdate .disabled
+.publishBox-textarea {
+background: #F8F8F8;
+}
+
+.publishBox-textarea {
+border: 0;
+color: #333;
+font-size: 14px;
+overflow: hidden;
+overflow-y: auto;
+resize: none;
+word-break: break-all;
+word-wrap: break-word;
+outline: none;
+vertical-align: top;
+line-height: 18px;
+height: 85px;
+width: 527px;
+}
+
+
+.publishBox-ft {
+padding-top: 3px;
+height: 27px;
+overflow: hidden;
+}
+
+.publishBox-btn {
+float: right;
+height: 27px;
+width: 73px;
+}
+
+.mainBox {
+padding: 0 30px;
+}
+.mainBox-hd {
+margin-top: 15px;
+}
+.operate-titleBox {
+height: 30px;
+}
+.operate-listBox {
+background: #E9E9E9;
+color: #C5C5C5;
+height: 1px;
+}
+.new-message {
+background: #FFDFD5;
+color: #E26640;
+display: block;
+line-height: 26px;
+height: 26px;
+text-align: center;
+margin-top: 12px;
+}
+
+.tweetList {
+clear: both;
+}
+
+ul{
+margin: 0;
+padding: 0;
 }

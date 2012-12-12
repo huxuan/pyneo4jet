@@ -5,10 +5,16 @@
 </head>
 <body>
     % include nav username=get('username')
-    % setdefault('tweet_form', False)
-    % if tweet_form:
-        % include tweet_form username=get('username')
-    % end
-    % include
+    <div class="content_base clearfix" style="overflow:hidden">
+     <div class="conL" style="height: auto; ">
+			<div class="conL-inner">
+		    % setdefault('tweet_form', False)
+		    % if tweet_form:
+		        % include tweet_form username=get('username')
+		    % end
+		    % include
+		 </div>
+	 </div>
+  </div>
 </body>
 </html>

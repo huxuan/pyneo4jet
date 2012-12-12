@@ -1,5 +1,5 @@
 <div class="nav">
-    <a href="/">Home</a></li>
+    <a class="home" href="/">Home</a></li>
     <span class="pipe">·</span>
     % if defined('username') and username:
     <a href="/{{username}}/">{{username}}</a>
