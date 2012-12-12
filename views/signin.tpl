@@ -1,14 +1,10 @@
-
-
-
 <table width="440" height="512"  border="0" align="center" cellpadding="0" cellspacing="0">
   <tr align="center" valign="middle">            
-			<td height="124" colspan="2">
-					<h1 class="title" >Welcome to pyneo4jet!</h1> 
-			</td>          
+		<td height="124" colspan="2">
+				<h1 class="title" >Welcome to pyneo4jet!</h1> 
+		</td>          
 	</tr>
   <tr>   
-  	
 		<td height="139" align="center">
 			<form action="/" method="POST">
 					<table width="320" height="115" bgcolor="ACDAE5" border="0" align="center" cellpadding="0" cellspacing="0">

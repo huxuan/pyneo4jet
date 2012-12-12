@@ -16,7 +16,6 @@
             % end
         </div>
         % end
-
         <div class="action">
             % if user.username == owner.username:
             <div class="update">
@@ -37,7 +36,6 @@
             % end
         </div>
     </div>
-
     % include tweets_list tweets=tweets
 </div>
 % rebase base title=user.username, username=user.username

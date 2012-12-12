@@ -6,7 +6,6 @@
          </div>
       <a id="news" class="new-message" style="display: none; "></a>
       </div>
-      
       <div id="mainTweetList" class="mainBox-bd">
          <ul id="tweetList" class="tweetList homeTimeline" data-type="homeTimeline" data-user-id="-1629930739790618329">
 						<div class="tweets">
