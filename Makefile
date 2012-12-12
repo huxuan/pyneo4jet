@@ -1,3 +1,7 @@
+# Run
+run:
+	python pyneo4jet.py
+
 # Clean Code
 clean:
 	find . -name '*.pyc' -print0 | xargs -0 rm -f
