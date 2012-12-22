@@ -13,6 +13,7 @@ License GPLv3
 """
 
 import re
+import random
 import datetime
 
 from model import User, Tweet, db
@@ -52,7 +53,11 @@ def main():
             for key in KEYS:
                 res, msg = Tweet.add(info['username'],
                     'My %s is %s' % (key, info[key]),
-                    datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    (
+                        datetime.datetime.now() -
+                        datetime.timedelta(days=random.randrange(0, 365)) -
+                        datetime.timedelta(seconds=random.randrange(0, 86400))
+                    ).strftime('%Y-%m-%d %H:%M:%S'),
                 )
                 if not res:
                     print msg
