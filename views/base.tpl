@@ -8,9 +8,8 @@
         <div class="content_base clearfix" style="overflow:hidden">
             <div class="conL" style="height: auto; ">
                 <div class="conL-inner">
-                % setdefault('tweet_form', False)
-                % if tweet_form:
-                    % include tweet_form username=get('username')
+                % if get('ownername') and ownername == username:
+                    % include tweet_form ownername=get('ownername')
                 % end
                 % include
                 </div>

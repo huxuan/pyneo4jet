@@ -1,5 +1,5 @@
-% if defined('username') and username:
-<form action="/{{username}}/?action=tweet" method="POST">
+% if defined('ownername') and ownername:
+<form action="/{{ownername}}/?action=tweet" method="POST">
     <div class="recommendTopic clearfix">
         <div id="textAdContainer" class="recommendTopic-topic"></div>
     </div>

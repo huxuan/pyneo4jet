@@ -172,7 +172,8 @@ def profile_post(username):
         if res:
             redirect('/%s/' % username)
         else:
-            return template('%s_update' % action, user=user, msg=msg)
+            return template('%s_update' % action, user=user, msg=msg,
+                ownername=ownername)
     elif action == 'follow':
         owner.follow(username)
     elif action == 'unfollow':
@@ -192,12 +193,14 @@ def timeline(username, index=0):
     :type index: int
     :rtype: timeline page shown
     """
+    ownername = request.get_cookie('username', secret=COOKIES_SECRET)
     user = User.get(username)
     tweets = user.get_timeline(index) or {}
     return template('tweets',
         title='Timeline',
         username=username,
         tweets=tweets,
+        ownername=ownername,
     )
 
 @get('/<username>/tweets/')
@@ -213,12 +216,14 @@ def user_tweets(username, index=0):
     :type index: int
     :rtype: tweets page shown
     """
+    ownername = request.get_cookie('username', secret=COOKIES_SECRET)
     user = User.get(username)
     tweets = user.get_tweets(index)
     return template('tweets',
         title='%s\'s Tweets' % username,
         username=username,
         tweets=tweets,
+        ownername=ownername,
     )
 
 @get('/<username>/followers/')
@@ -273,12 +278,14 @@ def user_random(username):
     :type username: string
     :rtype: random tweets page shown
     """
+    ownername = request.get_cookie('username', secret=COOKIES_SECRET)
     user = User.get(username)
     tweets = user.get_random_tweets()
     return template('tweets',
         title='%s\'s Random Tweets' % username,
         username=username,
         tweets=tweets,
+        ownername=ownername,
     )
 
 @get('/images/<filename:path>')
