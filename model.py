@@ -250,6 +250,7 @@ class User(object):
             tweet.created_at = tweet_node['created_at']
             tweet.tid = tweet_node['tid']
             tweets_list.append(tweet)
+        tweets_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return tweets_list[index : min(index + amount, len(tweets_list))]
 
     def get_timeline(self, index=0, amount=10):
@@ -299,6 +300,7 @@ class User(object):
                 tids.add(tid)
             if count > 10 * amount:
                 break
+        random_list.sort(key=lambda tweet: tweet.created_at, reverse=True)
         return random_list
 
 class Tweet(object):
