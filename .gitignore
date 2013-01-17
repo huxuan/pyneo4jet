@@ -42,3 +42,7 @@ images/*
 !images/default
 !images/favicon.ico
 *.bak
+*.aux
+*.log
+*.out
+*.toc
